@@ -34,6 +34,9 @@ const SubCategoryCards: React.FC<BuySellSubMenuProps> = ({
   category,
 }) => {
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+  const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>(
+    {}
+  );
 
   // Only fetch data if categoryData is not provided
   const { categoriesData, error, isLoading } = useBuySellData();
@@ -59,6 +62,10 @@ const SubCategoryCards: React.FC<BuySellSubMenuProps> = ({
     }
   }, [categoriesData, categoryName, categoryData]);
 
+  const handleImageError = (itemId: string) => {
+    setImageErrors((prev) => ({ ...prev, [itemId]: true }));
+  };
+
   // Show loading state only if we're fetching and don't have categoryData
   if (isLoading && !categoryData) {
     return (
@@ -81,8 +88,6 @@ const SubCategoryCards: React.FC<BuySellSubMenuProps> = ({
     );
   }
 
-
-
   return (
     <>
       {subCategories.map((item) => {
@@ -99,12 +104,17 @@ const SubCategoryCards: React.FC<BuySellSubMenuProps> = ({
                                hover:bg-orange-100 hover:text-orange-600 
                                transition-all duration-200 cursor-pointer"
           >
-            <Image
-              src={item.imageUrl}
-              alt={item.category}
-              width={20}
-              height={20}
-            />
+            {imageErrors[item.id] ? (
+              <BiShapePolygon size={20} className="text-gray-400" />
+            ) : (
+              <Image
+                src={item.imageUrl}
+                alt={item.category}
+                width={20}
+                height={20}
+                onError={() => handleImageError(item.id)}
+              />
+            )}
             <p
               className="block w-full max-w-[120px] text-center truncate text-xs text-gray-700"
               title={item.category}
