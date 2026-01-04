@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { buildListingsUrl, LISTINGS_ENDPOINTS, authHttpClient } from "@/lib";
 import toast from "react-hot-toast";
 import { useFormContext } from "@/app/components/Forms/Foods/context/FormContext";
+import { AxiosResponse } from "axios";
 
 interface BaseData {
   service: any;
@@ -36,17 +37,6 @@ export const useUnifiedPostForm = () => {
   const { FormData, handleFormData, handleSetCategoryActive, clearFormData } =
     useFormContext();
 
-    console.log(FormData)
-    console.log(FormData)
-    console.log(FormData)
-    console.log(FormData)
-    console.log(FormData)
-    console.log(FormData)
-    console.log(FormData)
-    console.log(FormData)
-    console.log(FormData)
-    console.log(FormData)
-
   const handleInitialSubmit = useCallback(
     (data: BaseData) => {
       setBaseData(data);
@@ -67,10 +57,6 @@ export const useUnifiedPostForm = () => {
         region: data.location.region,
         categoryGroup: myGroup,
       };
-
-      console.log(initial)
-      console.log(initial)
-      console.log(initial)
 
       setFormData((p) => ({ ...p, ...initial }));
       handleFormData(initial);
@@ -118,9 +104,6 @@ export const useUnifiedPostForm = () => {
       // images: baseData.images,
     };
 
-    console.log(payload);
-    console.log(payload);
-
     if (!payload.categoryGroup) {
       const myGroup = mapGroupKeyToCategoryGroup(
         (baseData?.service?.group || groupParam || "").toString()
@@ -136,16 +119,22 @@ export const useUnifiedPostForm = () => {
 
     try {
       const apiUrl = buildListingsUrl(LISTINGS_ENDPOINTS.list);
-      const response = await authHttpClient.post(apiUrl, payload as any);
+      const response: AxiosResponse = await authHttpClient.post(
+        apiUrl,
+        payload as any
+      );
       const message =
         (response as any)?.message || "Listing created successfully";
       toast.success(message);
-      router.push("/dashboard/manage-post");
+      if (response.data) {
+        clearFormData();
+        router.push("/dashboard/manage-post");
+      }
     } catch (error: any) {
       console.error(error);
       toast.error(error?.message || "Failed to create listing");
     }
-  }, [FormData, formData, baseData, groupParam, router]);
+  }, [FormData, formData, baseData, groupParam, router, clearFormData]);
 
   const currentGroup = useMemo(
     () => (groupParam || baseData?.service?.group || "").toLowerCase(),
