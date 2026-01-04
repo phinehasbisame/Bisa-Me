@@ -10,7 +10,6 @@ import Footer from "./components/Footer/Footer";
 import { Toaster } from "react-hot-toast";
 import ConditionalNavigation from "./components/Layout/ConditionalNavigation";
 import { SWRProvider } from "./api/auth/swrConfig";
-import FormContext from "./components/Forms/Foods/context/FormContext";
 import { AuthProvider } from "@/lib/context/AuthProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 

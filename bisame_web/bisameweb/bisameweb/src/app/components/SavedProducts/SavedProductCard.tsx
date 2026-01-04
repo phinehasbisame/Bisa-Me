@@ -95,7 +95,7 @@ const SavedProductCard: React.FC<SavedProductCardProps> = ({
       {/* Image Container */}
       <Link
         href={`/ProductDetails?id=${encodeURIComponent(
-          product.favoriteId as string
+          product.id as string
         )}`}
         className="relative group"
       >
