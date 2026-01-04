@@ -73,7 +73,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
       <button
         type="button"
         onClick={handleToggle}
-        disabled={disabled}
+        disabled
         className={`
           flex items-center justify-center gap-2 h-full
           ${compact
