@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 interface MessageContextMenuProps {
   isOpen: boolean;
@@ -19,7 +19,7 @@ const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
   onCopy,
   onDelete,
   onForward,
-  isOwnMessage
+  isOwnMessage,
 }) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -31,27 +31,29 @@ const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
     };
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   const menuItems = [
-    { label: 'Reply', action: onReply, icon: '↩️' },
-    { label: 'Copy', action: onCopy, icon: '📋' },
-    { label: 'Forward', action: onForward, icon: '➡️' },
-    ...(isOwnMessage ? [{ label: 'Delete', action: onDelete, icon: '🗑️', danger: true }] : [])
+    { label: "Reply", action: onReply, icon: "↩️" },
+    { label: "Copy", action: onCopy, icon: "📋" },
+    { label: "Forward", action: onForward, icon: "➡️" },
+    ...(isOwnMessage
+      ? [{ label: "Delete", action: onDelete, icon: "🗑️", danger: true }]
+      : []),
   ];
 
   return (
     <div
       ref={menuRef}
-      className="fixed bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 min-w-[140px]"
+      className="fixed bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-40 min-w-[140px]"
       style={{
         left: position.x,
         top: position.y,
@@ -65,7 +67,7 @@ const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
             onClose();
           }}
           className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-50 flex items-center space-x-2 ${
-            item.danger ? 'text-red-600 hover:bg-red-50' : 'text-gray-700'
+            item.danger ? "text-red-600 hover:bg-red-50" : "text-gray-700"
           }`}
         >
           <span>{item.icon}</span>

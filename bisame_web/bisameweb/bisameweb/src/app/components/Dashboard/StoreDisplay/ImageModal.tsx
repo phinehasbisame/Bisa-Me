@@ -1,6 +1,6 @@
-import { X, ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react';
-import Image from 'next/image';
-import { getImageUrl } from '@/app/components/ProductDetails/utils/imageUtils';
+import { X, ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
+import Image from "next/image";
+import { getImageUrl } from "@/app/components/ProductDetails/utils/imageUtils";
 
 interface ImageModalProps {
   isOpen: boolean;
@@ -12,14 +12,14 @@ interface ImageModalProps {
   isImageError?: (index: number) => boolean;
 }
 
-const ImageModal = ({ 
-  isOpen, 
-  onClose, 
-  images, 
-  currentIndex, 
+const ImageModal = ({
+  isOpen,
+  onClose,
+  images,
+  currentIndex,
   onIndexChange,
   onImageError,
-  isImageError 
+  isImageError,
 }: ImageModalProps) => {
   if (!isOpen) return null;
 
@@ -32,9 +32,9 @@ const ImageModal = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') onClose();
-    if (e.key === 'ArrowRight') nextImage();
-    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === "Escape") onClose();
+    if (e.key === "ArrowRight") nextImage();
+    if (e.key === "ArrowLeft") prevImage();
   };
 
   const handleImageError = (index: number) => {
@@ -48,8 +48,8 @@ const ImageModal = ({
   const hasError = isImageError?.(currentIndex) || false;
 
   return (
-    <div 
-      className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center"
+    <div
+      className="fixed inset-0 z-40 bg-black bg-opacity-90 flex items-center justify-center"
       onKeyDown={handleKeyDown}
       tabIndex={0}
     >

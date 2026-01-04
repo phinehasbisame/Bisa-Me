@@ -27,7 +27,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   mutate,
 }) => {
   // Use imageUtils to get properly formatted image URL
-  const formattedAvatar = getImageUrl(avatar, 64, 64);
+  const formattedAvatar = avatar;
+
 
   return (
     <div className="border border-gray-200 rounded-md p-4 flex items-center space-x-4 transition-all duration-300 hover:shadow-md hover:border-gray-300 bg-white">
@@ -43,7 +44,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           onError={(e) => {
             // Fallback to default image if the profile image fails to load
             const target = e.target as HTMLImageElement;
-            target.src = '/follow.png';
+            target.src = '/follow.jpg';
           }}
         />
         {/* Online indicator (optional) */}

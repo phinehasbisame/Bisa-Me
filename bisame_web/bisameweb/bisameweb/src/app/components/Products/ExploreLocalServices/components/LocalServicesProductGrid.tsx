@@ -54,7 +54,7 @@ const LocalServicesProductGrid = ({
     <div className="relative w-full">
       {/* Left Arrow - Mobile only */}
       {showLeftArrow && (
-        <div className="absolute -left-2 sm:-left-3 md:-left-4 inset-y-0 h-full flex justify-center items-center z-[99] md:hidden">
+        <div className="absolute -left-2 sm:-left-3 md:-left-4 inset-y-0 h-full flex justify-center items-center z-40 md:hidden">
           <MdKeyboardArrowLeft
             size={24}
             className="sm:size-8 bg-[#00000022] rounded-full cursor-pointer text-white hover:bg-[#00000044] transition-colors"
@@ -65,7 +65,7 @@ const LocalServicesProductGrid = ({
 
       {/* Right Arrow - Mobile only */}
       {showRightArrow && (
-        <div className="absolute -right-2 sm:-right-3 md:-right-4 inset-y-0 h-full flex justify-center items-center z-[99] md:hidden">
+        <div className="absolute -right-2 sm:-right-3 md:-right-4 inset-y-0 h-full flex justify-center items-center z-40 md:hidden">
           <MdKeyboardArrowRight
             size={24}
             className="sm:size-8 bg-[#00000022] rounded-full cursor-pointer text-white hover:bg-[#00000044] transition-colors"
@@ -93,7 +93,6 @@ const LocalServicesProductGrid = ({
           </div>
         ))}
       </div>
-
     </div>
   );
 };

@@ -84,7 +84,7 @@ const BottomNav: React.FC<BottomNavProps> = ({}) => {
 
   return (
     // Hide the entire component on mobile screens, show on md and above
-    <div className="hidden md:block relative">
+    <div className="hidden bg-white md:block relative">
       <div className="flex items-center justify-between p-4 px-4 md:px-8 lg:px-16 xl:px-24 2xl:px-56 border-b">
         <div className="flex space-x-4">
           <button
@@ -146,7 +146,7 @@ const BottomNav: React.FC<BottomNavProps> = ({}) => {
         ref={categoriesDropdownRef}
         className={`
           absolute md:left-6 lg:left-16  xl:left-24 2xl:left-56
-          z-50
+          z-40
           transform transition-all duration-300 origin-top
           ${showCategories ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"}
           `}
@@ -157,7 +157,7 @@ const BottomNav: React.FC<BottomNavProps> = ({}) => {
       {/* Sign-in Modal */}
       <div
         ref={signInDropdownRef}
-        className={`absolute right-4 md:right-8 lg:right-16 xl:right-24 2xl:right-56 top-full z-50 mt-2 transition-all duration-300 transform
+        className={`absolute right-4 md:right-8 lg:right-16 xl:right-24 2xl:right-56 top-full z-40 mt-2 transition-all duration-300 transform
           ${
             showSignIn
               ? "opacity-100 translate-y-0 scale-100"
@@ -317,7 +317,7 @@ export default BottomNav;
 //       <div
 //         ref={servicesDropdownRef}
 //         className={`
-//           absolute left-4 md:left-8 lg:left-16 xl:left-24 2xl:left-32 top-full z-50
+//           absolute left-4 md:left-8 lg:left-16 xl:left-24 2xl:left-32 top-full z-40
 //           transform transition-all duration-300 origin-top
 //           ${showServices
 //             ? 'scale-y-100 opacity-100'
@@ -332,7 +332,7 @@ export default BottomNav;
 //       <div
 //         ref={buySellDropdownRef}
 //         className={`
-//           absolute left-4 md:left-24 lg:left-32 xl:left-40 2xl:left-56 top-full z-50
+//           absolute left-4 md:left-24 lg:left-32 xl:left-40 2xl:left-56 top-full z-40
 //           transform transition-all duration-300 origin-top
 //           ${showBuySell
 //             ? 'scale-y-100 opacity-100'

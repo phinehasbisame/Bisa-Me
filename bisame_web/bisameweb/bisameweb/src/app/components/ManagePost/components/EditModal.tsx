@@ -83,10 +83,13 @@ const EditModal: React.FC<EditModalProps> = ({ id, product, onCancel }) => {
     newProductData?.category,
     newProductData?.subCategory
   );
-  
+
   // Transform data to match InitializeFormProps
-  const formOptions: { data: { name: string }[] } | undefined = 
-    data && typeof data === 'object' && 'data' in data && Array.isArray(data.data)
+  const formOptions: { data: { name: string }[] } | undefined =
+    data &&
+    typeof data === "object" &&
+    "data" in data &&
+    Array.isArray(data.data)
       ? { data: data.data as { name: string }[] }
       : undefined;
 
@@ -352,7 +355,7 @@ const EditModal: React.FC<EditModalProps> = ({ id, product, onCancel }) => {
 
   if (isLoading || isLoadingProduct) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50">
         <div className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full text-center">
           <LuLoaderCircle className="animate-spin mx-auto mb-4" size={40} />
           <p className="text-gray-700">Loading product...</p>
@@ -367,7 +370,7 @@ const EditModal: React.FC<EditModalProps> = ({ id, product, onCancel }) => {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-60 p-4">
       <div className="bg-white rounded-lg shadow-2xl max-w-2xl w-full p-6 overflow-y-auto max-h-[90vh] relative">
         <button
           type="button"
@@ -404,9 +407,11 @@ const EditModal: React.FC<EditModalProps> = ({ id, product, onCancel }) => {
           />
 
           <FormTextField
-            data={data && data.data && Array.isArray(data.data) 
-              ? { data: data.data as FormOptions[] } 
-              : null}
+            data={
+              data && data.data && Array.isArray(data.data)
+                ? { data: data.data as FormOptions[] }
+                : null
+            }
             formData={formData}
             onInputChange={(field, value) => {
               const base = (formData as FlatForm | null) ?? null;

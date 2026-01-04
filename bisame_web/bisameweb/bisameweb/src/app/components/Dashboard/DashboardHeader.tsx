@@ -79,7 +79,7 @@ const DashboardHeader = () => {
 
             {/* Dropdown Business Details */}
             {showBusinessDetails && (
-              <div className="absolute -left-6 md:left-0 top-full mt-2 z-50 w-full min-w-[90vw] max-w-7xl sm:min-w-[320px] sm:max-w-md animate-in slide-in-from-top-2 duration-200">
+              <div className="absolute -left-6 md:left-0 top-full mt-2 z-40 w-full min-w-[90vw] max-w-7xl sm:min-w-[320px] sm:max-w-md animate-in slide-in-from-top-2 duration-200">
                 <div className="bg-white rounded-lg shadow-lg border border-gray-200 w-full">
                   {/* Close button overlay */}
                   <div className="relative">
@@ -112,10 +112,7 @@ const DashboardHeader = () => {
 
           {/* Right side - Profile Section */}
           <div className="relative w-auto">
-            <button
-              onClick={toggleAccountInfo}
-              className="flex md:gap-2"
-            >
+            <button onClick={toggleAccountInfo} className="flex md:gap-2">
               {loading || profileLoading ? (
                 <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" />
               ) : (
@@ -140,13 +137,15 @@ const DashboardHeader = () => {
               </div>
               <FaChevronDown
                 className={`w-4 h-4 text-orange-500 transition-transform ml-3 duration-200 self-center
-                          ${showAccountInfo ? "rotate-180" : ""} hidden md:block`}
+                          ${
+                            showAccountInfo ? "rotate-180" : ""
+                          } hidden md:block`}
               />
             </button>
 
             {/* Dropdown Account Info */}
             {showAccountInfo && (
-              <div className="absolute right-0 top-full mt-2 z-50 w-full min-w-[90vw] max-w-7xl sm:min-w-[320px] sm:max-w-md animate-in slide-in-from-top-2 duration-200">
+              <div className="absolute right-0 top-full mt-2 z-40 w-full min-w-[90vw] max-w-7xl sm:min-w-[320px] sm:max-w-md animate-in slide-in-from-top-2 duration-200">
                 <div className="bg-white rounded-lg shadow-lg border border-gray-200 w-full">
                   {/* Close button overlay */}
                   <div className="relative">

@@ -61,7 +61,6 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     error: errorProduct,
   } = useProductData(id);
 
-
   // Use external loading/error if provided, otherwise use fetch hook states
   const isLoading = externalLoading ?? isLoadingProduct;
   const loadError = externalError ?? errorProduct;
@@ -160,7 +159,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   // Loading state
   if (isLoading) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
+      <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
         <div className="bg-white rounded-lg shadow-2xl max-w-md w-full mx-4 p-6 flex flex-col items-center">
           <LuLoaderCircle className="w-12 h-12 text-orange-400 animate-spin mb-4" />
           <p className="text-gray-500 text-sm">Loading product data...</p>
@@ -172,7 +171,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   // No data state
   if (!productData || !formData) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
+      <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
         <div className="bg-white rounded-lg shadow-2xl max-w-md w-full mx-4 p-6 flex flex-col items-center">
           <p className="text-red-600 font-semibold mb-2">
             {loadError ? "Failed to load product" : "Product not found"}
@@ -198,7 +197,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-lg shadow-2xl max-w-2xl w-full mx-4 p-6 relative overflow-y-auto max-h-[90vh]"

@@ -21,7 +21,7 @@ const SummaryModal: React.FC<SummaryModalProps> = ({
   onClose,
 }) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="flex items-center gap-3 p-5 border-b">

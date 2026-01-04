@@ -64,7 +64,7 @@ export const ServiceCategorySelector: React.FC<
           </button>
 
           {isExpanded && (
-            <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+            <div className="absolute z-40 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
               <ServiceSelector
                 onServiceSelect={handleServiceSelect}
                 selectedService={selectedService}

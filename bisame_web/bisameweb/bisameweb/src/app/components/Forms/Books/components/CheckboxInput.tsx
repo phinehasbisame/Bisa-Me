@@ -102,7 +102,7 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({
       </button>
 
       {isOpen && (
-        <div className="absolute w-full h-auto overflow-hidden z-[99] bg-white top-20 flex flex-col justify-center divide-y-2 border border-blue-300 rounded-xl">
+        <div className="absolute w-full h-auto overflow-hidden z-40 bg-white top-20 flex flex-col justify-center divide-y-2 border border-blue-300 rounded-xl">
           {options.map((option) => (
             <label
               key={option}

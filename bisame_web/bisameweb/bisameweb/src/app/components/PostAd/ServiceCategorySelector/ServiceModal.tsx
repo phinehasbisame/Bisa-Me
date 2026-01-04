@@ -57,7 +57,7 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden">
+    <div className="fixed inset-0 z-40 overflow-hidden">
       <div className="flex min-h-screen items-end sm:items-center justify-center sm:p-4 lg:p-6">
         {/* Background overlay */}
         <div

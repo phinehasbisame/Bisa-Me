@@ -165,7 +165,7 @@ const MobileSearchModal: React.FC<MobileSearchModalProps> = ({
       <div
         ref={modalRef}
         className={`
-          fixed top-0 left-0 right-0 bg-white shadow-2xl z-50
+          fixed top-0 left-0 right-0 bg-white shadow-2xl z-40
           transform transition-all duration-300 ease-out
           ${
             isOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"

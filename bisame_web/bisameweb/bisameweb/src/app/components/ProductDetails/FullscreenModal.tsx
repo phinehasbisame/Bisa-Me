@@ -113,7 +113,7 @@ const FullscreenModal: FC<FullscreenModalProps> = ({
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center"
+      className="fixed inset-0 z-40 bg-black bg-opacity-90 flex items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -122,7 +122,7 @@ const FullscreenModal: FC<FullscreenModalProps> = ({
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 text-white bg-black/60 hover:bg-black/80 rounded-full p-2 z-50"
+        className="absolute top-4 right-4 text-white bg-black/60 hover:bg-black/80 rounded-full p-2 z-40"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -141,7 +141,7 @@ const FullscreenModal: FC<FullscreenModalProps> = ({
       </button>
 
       {/* Zoom controls */}
-      <div className="absolute top-4 left-4 flex flex-col gap-2 z-50">
+      <div className="absolute top-4 left-4 flex flex-col gap-2 z-40">
         <button
           onClick={handleZoomIn}
           disabled={scale >= maxScale}
@@ -179,7 +179,7 @@ const FullscreenModal: FC<FullscreenModalProps> = ({
         {/* Prev arrow */}
         <button
           onClick={onPrevImage}
-          className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 rounded-full text-white hover:bg-black/80 transition-colors z-50"
+          className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 rounded-full text-white hover:bg-black/80 transition-colors z-40"
           aria-label="Previous image"
         >
           <FaArrowLeft size={24} />
@@ -220,7 +220,7 @@ const FullscreenModal: FC<FullscreenModalProps> = ({
         {/* Next arrow */}
         <button
           onClick={onNextImage}
-          className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 rounded-full text-white hover:bg-black/80 transition-colors z-50"
+          className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 rounded-full text-white hover:bg-black/80 transition-colors z-40"
           aria-label="Next image"
         >
           <FaArrowRight size={24} />

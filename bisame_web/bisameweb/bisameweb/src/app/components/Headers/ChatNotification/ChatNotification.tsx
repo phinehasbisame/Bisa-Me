@@ -1,34 +1,34 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/app/hooks/useAuth';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/hooks/useAuth";
 
 interface ChatNotificationProps {
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'default' | 'header' | 'sidebar';
+  size?: "sm" | "md" | "lg";
+  variant?: "default" | "header" | "sidebar";
   onUnauthorizedClick?: () => void;
 }
 
 const ChatNotification: React.FC<ChatNotificationProps> = ({
-  className = '',
-  size = 'md',
-  variant = 'default',
-  onUnauthorizedClick
+  className = "",
+  size = "md",
+  variant = "default",
+  onUnauthorizedClick,
 }) => {
   const router = useRouter();
   const [unreadCount, setUnreadCount] = useState(3); // Mock unread count
   const [isHovered, setIsHovered] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-     const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
 
   // Mock function to simulate receiving new messages
   useEffect(() => {
     const interval = setInterval(() => {
       // Randomly add new messages (for demo purposes)
       if (Math.random() > 0.8) {
-        setUnreadCount(prev => prev + 1);
+        setUnreadCount((prev) => prev + 1);
       }
     }, 10000); // Check every 10 seconds
 
@@ -38,22 +38,22 @@ const ChatNotification: React.FC<ChatNotificationProps> = ({
   // Check login status only on client - following MiddleNav pattern
   useEffect(() => {
     const checkLoginStatus = () => {
-      const token = localStorage.getItem('authToken');
-      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem("authToken");
+      const userId = localStorage.getItem("userId");
       setIsLoggedIn(!!token || !!userId);
     };
-    
+
     checkLoginStatus();
-    
+
     // Listen for storage changes to update login status
-    window.addEventListener('storage', checkLoginStatus);
-    return () => window.removeEventListener('storage', checkLoginStatus);
+    window.addEventListener("storage", checkLoginStatus);
+    return () => window.removeEventListener("storage", checkLoginStatus);
   }, []);
 
   // Handle click with authentication check - following MiddleNav pattern
   const handleClick = () => {
     if (isAuthenticated) {
-      router.push('/dashboard/chat-messages');
+      router.push("/dashboard/chat-messages");
     } else {
       // Call the callback to show sign-in modal or handle unauthorized access
       onUnauthorizedClick?.();
@@ -63,39 +63,42 @@ const ChatNotification: React.FC<ChatNotificationProps> = ({
   // Size configurations
   const sizeConfig = {
     sm: {
-      icon: 'w-5 h-5',
-      button: 'p-2',
-      badge: 'w-4 h-4 text-xs',
-      badgeOffset: '-top-1 -right-1'
+      icon: "w-5 h-5",
+      button: "p-2",
+      badge: "w-4 h-4 text-xs",
+      badgeOffset: "-top-1 -right-1",
     },
     md: {
-      icon: 'w-6 h-6',
-      button: 'p-2.5',
-      badge: 'w-5 h-5 text-xs',
-      badgeOffset: '-top-2 -right-2'
+      icon: "w-6 h-6",
+      button: "p-2.5",
+      badge: "w-5 h-5 text-xs",
+      badgeOffset: "-top-2 -right-2",
     },
     lg: {
-      icon: 'w-7 h-7',
-      button: 'p-3',
-      badge: 'w-6 h-6 text-sm',
-      badgeOffset: '-top-2 -right-2'
-    }
+      icon: "w-7 h-7",
+      button: "p-3",
+      badge: "w-6 h-6 text-sm",
+      badgeOffset: "-top-2 -right-2",
+    },
   };
 
   // Variant configurations
   const variantConfig = {
     default: {
-      button: 'bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 shadow-sm',
-      badge: 'bg-red-500 text-white'
+      button:
+        "bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 shadow-sm",
+      badge: "bg-red-500 text-white",
     },
     header: {
-      button: 'bg-transparent hover:bg-gray-100 text-gray-600 hover:text-gray-800',
-      badge: 'bg-red-500 text-white'
+      button:
+        "bg-transparent hover:bg-gray-100 text-gray-600 hover:text-gray-800",
+      badge: "bg-red-500 text-white",
     },
     sidebar: {
-      button: 'bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200',
-      badge: 'bg-orange-500 text-white'
-    }
+      button:
+        "bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200",
+      badge: "bg-orange-500 text-white",
+    },
   };
 
   const currentSize = sizeConfig[size];
@@ -111,10 +114,14 @@ const ChatNotification: React.FC<ChatNotificationProps> = ({
           relative rounded-lg transition-all duration-200 border focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1
           ${currentSize.button}
           ${currentVariant.button}
-          ${isHovered ? 'transform scale-105' : ''}
+          ${isHovered ? "transform scale-105" : ""}
         `}
-        aria-label={`Chat messages ${unreadCount > 0 ? `(${unreadCount} unread)` : ''}`}
-        title={`Chat Messages ${unreadCount > 0 ? `- ${unreadCount} unread messages` : ''}`}
+        aria-label={`Chat messages ${
+          unreadCount > 0 ? `(${unreadCount} unread)` : ""
+        }`}
+        title={`Chat Messages ${
+          unreadCount > 0 ? `- ${unreadCount} unread messages` : ""
+        }`}
       >
         {/* Chat Icon */}
         <svg
@@ -143,7 +150,7 @@ const ChatNotification: React.FC<ChatNotificationProps> = ({
               animate-pulse
             `}
           >
-            {unreadCount > 99 ? '99+' : unreadCount}
+            {unreadCount > 99 ? "99+" : unreadCount}
           </span>
         )}
 
@@ -162,11 +169,10 @@ const ChatNotification: React.FC<ChatNotificationProps> = ({
 
       {/* Tooltip on hover */}
       {isHovered && (
-        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm text-white bg-gray-800 rounded-lg whitespace-nowrap z-50">
-          {unreadCount > 0 
-            ? `${unreadCount} unread message${unreadCount !== 1 ? 's' : ''}`
-            : 'Chat Messages'
-          }
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm text-white bg-gray-800 rounded-lg whitespace-nowrap z-40">
+          {unreadCount > 0
+            ? `${unreadCount} unread message${unreadCount !== 1 ? "s" : ""}`
+            : "Chat Messages"}
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800" />
         </div>
       )}

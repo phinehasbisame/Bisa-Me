@@ -1,5 +1,5 @@
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
 
 interface ProfileImagePreviewModalProps {
   isOpen: boolean;
@@ -18,7 +18,7 @@ const ProfileImagePreviewModal: React.FC<ProfileImagePreviewModalProps> = ({
 }) => {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transform transition-all duration-300 scale-95 opacity-0 animate-bounceIn">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transform transition-all duration-300 scale-95 opacity-0 animate-bounceIn">
       <div className="bg-white rounded-lg shadow-2xl max-w-xs w-full mx-4 p-6 relative animate-scaleIn flex flex-col items-center">
         <button
           className="absolute top-3 right-3 text-gray-400 hover:text-orange-500 text-xl focus:outline-none z-20"
@@ -44,13 +44,15 @@ const ProfileImagePreviewModal: React.FC<ProfileImagePreviewModalProps> = ({
           </button>
           <button
             onClick={onUpload}
-            className={`flex-1 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 font-semibold transition-colors flex items-center justify-center ${loading ? 'opacity-60 cursor-not-allowed' : ''}`}
+            className={`flex-1 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 font-semibold transition-colors flex items-center justify-center ${
+              loading ? "opacity-60 cursor-not-allowed" : ""
+            }`}
             disabled={loading}
           >
             {loading ? (
               <span className="loader mr-2 w-4 h-4 border-2 border-white border-t-blue-500 rounded-full animate-spin"></span>
             ) : null}
-            {loading ? 'Uploading...' : 'Upload'}
+            {loading ? "Uploading..." : "Upload"}
           </button>
         </div>
       </div>

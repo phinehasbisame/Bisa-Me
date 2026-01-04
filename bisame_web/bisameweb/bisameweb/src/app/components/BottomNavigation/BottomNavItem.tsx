@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import Link from "next/link";
 import { IconType } from "react-icons";
@@ -30,7 +30,7 @@ const BottomNavItem: React.FC<BottomNavItemProps> = ({
 
   const combinedClasses = `${baseClasses} ${activeClasses} ${className}`;
 
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   const content = (
     <>
@@ -38,7 +38,7 @@ const BottomNavItem: React.FC<BottomNavItemProps> = ({
         className={isActive ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"}
       />
       {isActive && label && (
-        <span className="text-sm sm:text-base -z-50">{label}</span>
+        <span className="text-sm sm:text-base -z-40">{label}</span>
       )}
     </>
   );

@@ -29,7 +29,7 @@ const ChatArea: React.FC<ChatAreaProps> = memo(
             messageSearchParams={messageSearchParams}
           />
         </div>
-        <div className="flex-shrink-0 fixed md:static bottom-0 z-50 p-1">
+        <div className="flex-shrink-0 fixed md:static bottom-0 z-40 p-1">
           <ChatInput
             userId={currentUserId}
             onSendMessage={onSendMessage}

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { FaTimes } from 'react-icons/fa';
-import { getImageUrl } from '@/app/components/ProductDetails/utils/imageUtils';
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { FaTimes } from "react-icons/fa";
+import { getImageUrl } from "@/app/components/ProductDetails/utils/imageUtils";
 
 interface ReviewPostModalProps {
   open: boolean;
@@ -16,11 +16,11 @@ interface ReviewPostModalProps {
 const ReviewPostModal: React.FC<ReviewPostModalProps> = ({
   open,
   onClose,
-  image = '/f4.png',
+  image = "/f4.png",
   title,
   description,
   price,
-  postdate
+  postdate,
 }) => {
   const [imgSrc, setImgSrc] = useState<string>(getImageUrl(image, 400, 400));
 
@@ -30,16 +30,16 @@ const ReviewPostModal: React.FC<ReviewPostModalProps> = ({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
-    if (open) window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    if (open) window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, onClose]);
 
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm animate-fadeIn">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm animate-fadeIn">
       <div className="bg-white rounded-lg shadow-2xl max-w-md w-full mx-4 relative animate-scaleIn">
         <button
           className="absolute top-3 right-3 text-gray-400 hover:text-orange-500 text-xl focus:outline-none z-20"
@@ -57,7 +57,7 @@ const ReviewPostModal: React.FC<ReviewPostModalProps> = ({
                 fill
                 className="object-cover"
                 sizes="400px"
-                onError={() => setImgSrc('/f4.png')}
+                onError={() => setImgSrc("/f4.png")}
                 priority
               />
             </div>
@@ -71,7 +71,9 @@ const ReviewPostModal: React.FC<ReviewPostModalProps> = ({
           {price && (
             <div className="flex items-center space-x-2 mb-1">
               <span className="text-orange-500 font-bold">
-                {typeof price === 'number' ? `₵${price.toLocaleString()}` : `₵${price}`}
+                {typeof price === "number"
+                  ? `₵${price.toLocaleString()}`
+                  : `₵${price}`}
               </span>
             </div>
           )}
@@ -82,18 +84,28 @@ const ReviewPostModal: React.FC<ReviewPostModalProps> = ({
       </div>
       <style jsx global>{`
         @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
         }
         .animate-fadeIn {
           animation: fadeIn 0.2s ease;
         }
         @keyframes scaleIn {
-          from { transform: scale(0.95); opacity: 0; }
-          to { transform: scale(1); opacity: 1; }
+          from {
+            transform: scale(0.95);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
         }
         .animate-scaleIn {
-          animation: scaleIn 0.25s cubic-bezier(0.4,0,0.2,1);
+          animation: scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
       `}</style>
     </div>

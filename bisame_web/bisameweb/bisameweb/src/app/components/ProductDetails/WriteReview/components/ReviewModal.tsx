@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { useEffect, useRef } from "react";
+import { FaTimes } from "react-icons/fa";
 
 interface ReviewModalProps {
   isOpen: boolean;
@@ -10,7 +10,12 @@ interface ReviewModalProps {
   children: React.ReactNode;
 }
 
-const ReviewModal = ({ isOpen, onClose, isSubmitting, children }: ReviewModalProps) => {
+const ReviewModal = ({
+  isOpen,
+  onClose,
+  isSubmitting,
+  children,
+}: ReviewModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,7 +26,7 @@ const ReviewModal = ({ isOpen, onClose, isSubmitting, children }: ReviewModalPro
     const firstElement = focusableElements?.[0];
     const lastElement = focusableElements?.[focusableElements.length - 1];
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Tab') {
+      if (e.key === "Tab") {
         if (focusableElements && focusableElements.length > 0) {
           if (e.shiftKey) {
             if (document.activeElement === firstElement) {
@@ -35,20 +40,20 @@ const ReviewModal = ({ isOpen, onClose, isSubmitting, children }: ReviewModalPro
             }
           }
         }
-      } else if (e.key === 'Escape') {
+      } else if (e.key === "Escape") {
         onClose();
       }
     };
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
     firstElement?.focus();
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 backdrop-blur-md"
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40 p-4 backdrop-blur-md"
       role="dialog"
       aria-modal="true"
       aria-labelledby="review-modal-title"
@@ -63,11 +68,13 @@ const ReviewModal = ({ isOpen, onClose, isSubmitting, children }: ReviewModalPro
         >
           <FaTimes className="text-gray-500" />
         </button>
-        <div id="review-modal-title" className="sr-only">Write a Review</div>
+        <div id="review-modal-title" className="sr-only">
+          Write a Review
+        </div>
         {children}
       </div>
     </div>
   );
 };
 
-export default ReviewModal; 
+export default ReviewModal;

@@ -34,13 +34,18 @@ const MiddleNav: React.FC = () => {
   }, []);
 
   const handleUserIconClick = () => {
-    console.log('[MiddleNav] User icon clicked. isAuthenticated:', isAuthenticated, 'isLoading:', isLoading);
+    console.log(
+      "[MiddleNav] User icon clicked. isAuthenticated:",
+      isAuthenticated,
+      "isLoading:",
+      isLoading
+    );
 
     if (isAuthenticated) {
-      console.log('[MiddleNav] Redirecting to dashboard');
+      console.log("[MiddleNav] Redirecting to dashboard");
       router.push("/dashboard");
     } else {
-      console.log('[MiddleNav] Showing sign-in modal');
+      console.log("[MiddleNav] Showing sign-in modal");
       setShowSignIn(!showSignIn);
     }
   };
@@ -113,7 +118,7 @@ const MiddleNav: React.FC = () => {
   };
 
   return (
-    <div className="relative">
+    <div>
       <nav className="flex items-center justify-between px-4 md:px-8 lg:px-16 xl:px-24 2xl:px-56 py-4 bg-blue-900">
         <div className="flex items-center border border-purple-800">
           <Link href="/" className="w-20">
@@ -202,10 +207,11 @@ const MiddleNav: React.FC = () => {
       {/* Sign-in Modal */}
       <div
         ref={dropdownRef}
-        className={`absolute right-4 md:right-8 lg:right-16 xl:right-24 2xl:right-56 top-full z-50 mt-2 transition-all duration-300 transform
-          ${showSignIn
-            ? "opacity-100 translate-y-0 scale-100"
-            : "opacity-0 -translate-y-4 scale-95 pointer-events-none"
+        className={`absolute right-4 md:right-8 lg:right-16 xl:right-24 2xl:right-56 top-full z-40 mt-2 transition-all duration-300 transform
+          ${
+            showSignIn
+              ? "opacity-100 translate-y-0 scale-100"
+              : "opacity-0 -translate-y-4 scale-95 pointer-events-none"
           }`}
       >
         <SignIn onLoginSuccess={handleLoginSuccess} />

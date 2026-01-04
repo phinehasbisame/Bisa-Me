@@ -62,7 +62,7 @@ const BuySellSubMenu: React.FC<BuySellSubMenuProps> = ({
   // Show loading state only if we're fetching and don't have categoryData
   if (isLoading && !categoryData) {
     return (
-      <div className="w-64 bg-white shadow-xl border-l ml-2 relative z-50 rounded-sm">
+      <div className="w-64 bg-white shadow-xl border-l ml-2 relative z-40 rounded-sm">
         <div className="p-4">
           <p className="text-gray-500">Loading subcategories...</p>
         </div>
@@ -73,7 +73,7 @@ const BuySellSubMenu: React.FC<BuySellSubMenuProps> = ({
   // Show error state only if we're fetching and don't have categoryData
   if (error && !categoryData) {
     return (
-      <div className="w-64 bg-white shadow-xl border-l ml-2 relative z-50 rounded-sm">
+      <div className="w-64 bg-white shadow-xl border-l ml-2 relative z-40 rounded-sm">
         <div className="p-4">
           <p className="text-red-500">Error loading subcategories</p>
         </div>
@@ -86,7 +86,7 @@ const BuySellSubMenu: React.FC<BuySellSubMenuProps> = ({
   return (
     <div
       className={`
-      w-64 bg-white shadow-xl border-l ml-4 z-50 rounded-sm
+      w-64 bg-white shadow-xl border-l ml-4 z-40 rounded-sm
       transform transition-all duration-500 ease-in-out
       ${isVisible ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0"}
     `}

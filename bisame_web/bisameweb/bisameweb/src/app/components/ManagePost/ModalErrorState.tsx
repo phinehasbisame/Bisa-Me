@@ -1,16 +1,23 @@
-import React from 'react';
+import React from "react";
 
 interface ModalErrorStateProps {
   error: Error | string | null;
   onCancel: () => void;
 }
 
-const ModalErrorState: React.FC<ModalErrorStateProps> = ({ error, onCancel }) => (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm animate-fadeIn">
+const ModalErrorState: React.FC<ModalErrorStateProps> = ({
+  error,
+  onCancel,
+}) => (
+  <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm animate-fadeIn">
     <div className="bg-white rounded-lg shadow-2xl max-w-md w-full mx-4 p-6 flex flex-col items-center">
       <p className="text-red-600 font-semibold mb-2">Failed to load product</p>
       <p className="text-gray-500 text-sm max-w-xs text-center">
-        {typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred'}
+        {typeof error === "string"
+          ? error
+          : error instanceof Error
+          ? error.message
+          : "An unknown error occurred"}
       </p>
       <button
         onClick={onCancel}
@@ -22,4 +29,4 @@ const ModalErrorState: React.FC<ModalErrorStateProps> = ({ error, onCancel }) =>
   </div>
 );
 
-export default ModalErrorState; 
+export default ModalErrorState;

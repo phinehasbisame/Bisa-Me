@@ -33,11 +33,12 @@ export default function RootLayout({
       >
         <AuthProvider>
           <SpeedInsights />
-          <NotificationBar />
+
           <ConditionalNavigation>
+            <NotificationBar />
             <TopNav />
             <MiddleNav />
-            <BottomNav />
+            {/* <BottomNav /> */}
           </ConditionalNavigation>
           <SWRProvider>{children}</SWRProvider>
           <Toaster position="top-right" />

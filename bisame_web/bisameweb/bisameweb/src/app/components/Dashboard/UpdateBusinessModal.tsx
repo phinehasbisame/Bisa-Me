@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Building2, Camera, MapPin, Upload, X } from 'lucide-react';
-import Image from 'next/image';
+import { useState } from "react";
+import { Building2, Camera, MapPin, Upload, X } from "lucide-react";
+import Image from "next/image";
 
 interface UpdateBusinessModalProps {
   isOpen: boolean;
@@ -10,46 +10,46 @@ interface UpdateBusinessModalProps {
 }
 
 const UpdateBusinessModal = ({ isOpen, onClose }: UpdateBusinessModalProps) => {
-  const [activeTab, setActiveTab] = useState<'images' | 'address'>('images');
+  const [activeTab, setActiveTab] = useState<"images" | "address">("images");
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [address, setAddress] = useState({
-    street: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    country: ''
+    street: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
   });
 
   if (!isOpen) return null;
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
-    setSelectedImages(prev => [...prev, ...files]);
+    setSelectedImages((prev) => [...prev, ...files]);
   };
 
   const removeImage = (index: number) => {
-    setSelectedImages(prev => prev.filter((_, i) => i !== index));
+    setSelectedImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleAddressChange = (field: string, value: string) => {
-    setAddress(prev => ({ ...prev, [field]: value }));
+    setAddress((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = () => {
     // Handle form submission logic here
-    console.log('Images:', selectedImages);
-    console.log('Address:', address);
+    console.log("Images:", selectedImages);
+    console.log("Address:", address);
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-40 flex items-center justify-center">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
-      
+
       {/* Modal */}
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-hidden">
         {/* Header */}
@@ -58,7 +58,9 @@ const UpdateBusinessModal = ({ isOpen, onClose }: UpdateBusinessModalProps) => {
             <div className="p-2 bg-gradient-to-r from-blue-500 to-orange-500 rounded-lg">
               <Building2 className="w-6 h-6 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-800">Update Business</h2>
+            <h2 className="text-2xl font-bold text-gray-800">
+              Update Business
+            </h2>
           </div>
           <button
             onClick={onClose}
@@ -71,11 +73,11 @@ const UpdateBusinessModal = ({ isOpen, onClose }: UpdateBusinessModalProps) => {
         {/* Tab Navigation */}
         <div className="flex border-b border-gray-100">
           <button
-            onClick={() => setActiveTab('images')}
+            onClick={() => setActiveTab("images")}
             className={`flex-1 py-4 px-6 text-center font-semibold transition-all ${
-              activeTab === 'images'
-                ? 'border-b-3 border-blue-500 text-blue-500 bg-blue-50'
-                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+              activeTab === "images"
+                ? "border-b-3 border-blue-500 text-blue-500 bg-blue-50"
+                : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
             }`}
           >
             <div className="flex items-center justify-center space-x-2">
@@ -84,11 +86,11 @@ const UpdateBusinessModal = ({ isOpen, onClose }: UpdateBusinessModalProps) => {
             </div>
           </button>
           <button
-            onClick={() => setActiveTab('address')}
+            onClick={() => setActiveTab("address")}
             className={`flex-1 py-4 px-6 text-center font-semibold transition-all ${
-              activeTab === 'address'
-                ? 'border-b-3 border-orange-500 text-orange-500 bg-orange-50'
-                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+              activeTab === "address"
+                ? "border-b-3 border-orange-500 text-orange-500 bg-orange-50"
+                : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
             }`}
           >
             <div className="flex items-center justify-center space-x-2">
@@ -100,7 +102,7 @@ const UpdateBusinessModal = ({ isOpen, onClose }: UpdateBusinessModalProps) => {
 
         {/* Content */}
         <div className="p-6 max-h-96 overflow-y-auto">
-          {activeTab === 'images' ? (
+          {activeTab === "images" ? (
             <div className="space-y-6">
               {/* Upload Area */}
               <div className="border-2 border-dashed border-blue-300 rounded-xl p-8 text-center hover:border-blue-400 transition-colors">
@@ -118,8 +120,12 @@ const UpdateBusinessModal = ({ isOpen, onClose }: UpdateBusinessModalProps) => {
                       <Upload className="w-8 h-8 text-blue-500" />
                     </div>
                     <div>
-                      <p className="text-lg font-semibold text-gray-700">Upload Store Images</p>
-                      <p className="text-sm text-gray-500">Drag and drop or click to select images</p>
+                      <p className="text-lg font-semibold text-gray-700">
+                        Upload Store Images
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Drag and drop or click to select images
+                      </p>
                     </div>
                   </div>
                 </label>
@@ -158,7 +164,9 @@ const UpdateBusinessModal = ({ isOpen, onClose }: UpdateBusinessModalProps) => {
                   <input
                     type="text"
                     value={address.street}
-                    onChange={(e) => handleAddressChange('street', e.target.value)}
+                    onChange={(e) =>
+                      handleAddressChange("street", e.target.value)
+                    }
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                     placeholder="Enter street address"
                   />
@@ -170,7 +178,9 @@ const UpdateBusinessModal = ({ isOpen, onClose }: UpdateBusinessModalProps) => {
                   <input
                     type="text"
                     value={address.city}
-                    onChange={(e) => handleAddressChange('city', e.target.value)}
+                    onChange={(e) =>
+                      handleAddressChange("city", e.target.value)
+                    }
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                     placeholder="Enter city"
                   />
@@ -182,7 +192,9 @@ const UpdateBusinessModal = ({ isOpen, onClose }: UpdateBusinessModalProps) => {
                   <input
                     type="text"
                     value={address.state}
-                    onChange={(e) => handleAddressChange('state', e.target.value)}
+                    onChange={(e) =>
+                      handleAddressChange("state", e.target.value)
+                    }
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                     placeholder="Enter state/province"
                   />
@@ -194,7 +206,9 @@ const UpdateBusinessModal = ({ isOpen, onClose }: UpdateBusinessModalProps) => {
                   <input
                     type="text"
                     value={address.zipCode}
-                    onChange={(e) => handleAddressChange('zipCode', e.target.value)}
+                    onChange={(e) =>
+                      handleAddressChange("zipCode", e.target.value)
+                    }
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                     placeholder="Enter ZIP code"
                   />
@@ -207,7 +221,9 @@ const UpdateBusinessModal = ({ isOpen, onClose }: UpdateBusinessModalProps) => {
                 <input
                   type="text"
                   value={address.country}
-                  onChange={(e) => handleAddressChange('country', e.target.value)}
+                  onChange={(e) =>
+                    handleAddressChange("country", e.target.value)
+                  }
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                   placeholder="Enter country"
                 />
@@ -215,7 +231,7 @@ const UpdateBusinessModal = ({ isOpen, onClose }: UpdateBusinessModalProps) => {
             </div>
           )}
         </div>
-        
+
         {/* Footer */}
         <div className="flex items-center justify-end space-x-4 p-6 border-t border-gray-100 bg-gray-50">
           <button

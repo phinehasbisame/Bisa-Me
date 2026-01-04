@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
-import { useReplyReview } from './useReplyReview';
-import toast from 'react-hot-toast';
+import React, { useEffect, useRef, useState } from "react";
+import { FaTimes } from "react-icons/fa";
+import { useReplyReview } from "./useReplyReview";
+import toast from "react-hot-toast";
 
 interface ReviewReplyModalProps {
   open: boolean;
@@ -11,8 +11,14 @@ interface ReviewReplyModalProps {
   onReplySuccess?: () => void;
 }
 
-const ReviewReplyModal: React.FC<ReviewReplyModalProps> = ({ open, onClose, reviewerName, reviewid, onReplySuccess }) => {
-  const [reply, setReply] = useState('');
+const ReviewReplyModal: React.FC<ReviewReplyModalProps> = ({
+  open,
+  onClose,
+  reviewerName,
+  reviewid,
+  onReplySuccess,
+}) => {
+  const [reply, setReply] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { replyToReview, loading, error, success } = useReplyReview();
   const [prevSuccess, setPrevSuccess] = useState(false);
@@ -25,22 +31,22 @@ const ReviewReplyModal: React.FC<ReviewReplyModalProps> = ({ open, onClose, revi
   }, [open]);
 
   useEffect(() => {
-    if (!open) setReply('');
+    if (!open) setReply("");
   }, [open]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
-    if (open) window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    if (open) window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, onClose]);
 
   // Only show toast when success or error changes from previous value
   useEffect(() => {
     if (success && !prevSuccess) {
-      toast.success('Reply sent successfully!');
-      setReply('');
+      toast.success("Reply sent successfully!");
+      setReply("");
       onClose();
       if (onReplySuccess) onReplySuccess();
     }
@@ -62,7 +68,7 @@ const ReviewReplyModal: React.FC<ReviewReplyModalProps> = ({ open, onClose, revi
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm animate-fadeIn">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm animate-fadeIn">
       <div className="bg-white rounded-lg shadow-2xl max-w-md w-full mx-4 p-6 relative animate-scaleIn">
         <button
           className="absolute top-3 right-3 text-gray-400 hover:text-orange-500 text-xl focus:outline-none"
@@ -71,13 +77,15 @@ const ReviewReplyModal: React.FC<ReviewReplyModalProps> = ({ open, onClose, revi
         >
           <FaTimes />
         </button>
-        <h2 className="text-lg font-bold text-gray-900 mb-2 text-center">Reply to {reviewerName || 'Review'}</h2>
+        <h2 className="text-lg font-bold text-gray-900 mb-2 text-center">
+          Reply to {reviewerName || "Review"}
+        </h2>
         <textarea
           ref={textareaRef}
           className="w-full border border-gray-200 rounded-md p-2 mb-4 min-h-[80px] focus:ring-2 focus:ring-orange-400 focus:outline-none resize-none"
           placeholder="Write your reply..."
           value={reply}
-          onChange={e => setReply(e.target.value)}
+          onChange={(e) => setReply(e.target.value)}
           disabled={loading}
         />
         <div className="flex justify-end gap-2">
@@ -95,32 +103,38 @@ const ReviewReplyModal: React.FC<ReviewReplyModalProps> = ({ open, onClose, revi
             disabled={!reply.trim() || loading}
             type="button"
           >
-            {loading ? (
-              <span>Sending...</span>
-            ) : (
-              'Send Reply'
-            )}
+            {loading ? <span>Sending...</span> : "Send Reply"}
           </button>
         </div>
       </div>
       <style jsx global>{`
         @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
         }
         .animate-fadeIn {
           animation: fadeIn 0.2s ease;
         }
         @keyframes scaleIn {
-          from { transform: scale(0.95); opacity: 0; }
-          to { transform: scale(1); opacity: 1; }
+          from {
+            transform: scale(0.95);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
         }
         .animate-scaleIn {
-          animation: scaleIn 0.25s cubic-bezier(0.4,0,0.2,1);
+          animation: scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
       `}</style>
     </div>
   );
 };
 
-export default ReviewReplyModal; 
+export default ReviewReplyModal;
