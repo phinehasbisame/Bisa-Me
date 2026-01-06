@@ -83,11 +83,37 @@ export const useProductForm = ({
     }
   }, [product]);
 
+  // Reset attributes to empty object
+  const resetAttributes = useCallback(() => {
+    setFormData((prev) => {
+      if (!prev) return prev; // Guard against null
+      return {
+        ...prev,
+        attributes: {},
+      };
+    });
+  }, []);
+
+  // Optionally: Reset all dynamic fields (attributes + category info)
+  const resetDynamicFields = useCallback(() => {
+    setFormData((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        attributes: {},
+        category: "",
+        subCategory: "",
+        childCategory: null,
+      };
+    });
+  }, []);
+
   return {
     formData,
-    setFormData,
     handleChange,
     updateField,
     resetForm,
+    resetAttributes,
+    resetDynamicFields, // Optional: for more aggressive resets
   };
 };

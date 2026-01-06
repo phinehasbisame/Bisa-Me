@@ -4,7 +4,7 @@ import type React from "react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Camera, Info, X, Upload, GripVertical, Loader2 } from "lucide-react";
 import Image from "next/image";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { useFormContext } from "../Forms/Foods/context/FormContext";
 import { useProfileData } from "../Dashboard/useProfileData";
 import { buildProfileUrl, FILE_ENDPOINTS, httpClient } from "@/lib";
@@ -312,6 +312,7 @@ const PhotoUploadSection = ({
                 <li>• First picture will be your main display image</li>
                 <li>• Drag and drop to reorder photos</li>
                 <li>• Click the Set as Main button to change the main image</li>
+                <li>• Upload a minimum of 3 pictures</li>
               </ul>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react" ;
 import { Product } from "./types";
 import { usePostUpdatePost } from "./usePostUpdatePost";
 import ImagePreviewGrid from "./ImagePreviewGrid";

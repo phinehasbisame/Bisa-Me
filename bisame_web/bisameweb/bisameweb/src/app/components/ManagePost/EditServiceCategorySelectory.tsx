@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import { ServiceModal } from "./ServiceModal";
-import { usePostServiceFormContext } from "../PostServiceFormComponents";
-import type { ServiceSelection } from "./useServiceSelector";
+import { useState } from "react" ;
+import { ServiceSelection } from "../PostAd/PostServiceFormComponents";
+import { useEditPostFormContext } from "./context/EditPostContext";
+import { ServiceModal } from "../PostAd/ServiceCategorySelector";
 
 export type GroupCategoryType =
   | "Services"
@@ -12,8 +12,7 @@ export type GroupCategoryType =
   | "Jobs"
   | "Job Seekers"
   | "Health"
-  | "Foods"
-  | "Food";
+  | "Foods" | "Food";
 
 interface ServiceCategorySelectorProps {
   onServiceSelect: (selection: ServiceSelection) => void;
@@ -23,7 +22,7 @@ interface ServiceCategorySelectorProps {
   group?: GroupCategoryType;
 }
 
-export const ServiceCategorySelector: React.FC<
+export const EditServiceCategorySelector: React.FC<
   ServiceCategorySelectorProps
 > = ({
   onServiceSelect,
@@ -33,7 +32,7 @@ export const ServiceCategorySelector: React.FC<
   group = "Services",
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { updateCategories } = usePostServiceFormContext();
+  const { updateCategories } = useEditPostFormContext();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);

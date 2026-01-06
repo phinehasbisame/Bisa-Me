@@ -41,6 +41,7 @@ const LocationSearchResults = ({
 
         return (
           <button
+            type="button"
             key={`${region}-${city}`}
             onClick={() => onLocationSelect(city, region)}
             className={`w-full text-left p-4 rounded-lg transition-colors border-l-4 ${

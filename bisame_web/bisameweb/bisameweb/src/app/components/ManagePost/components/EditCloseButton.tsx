@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback } from "react";
+import { useCallback } from "react" ;
 import { FaEdit } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
 import useActivatePosts from "../hooks/use-change-post-status";
@@ -18,6 +18,7 @@ const EditCloseButton: React.FC<EditCloseButtonProps> = ({
 }) => {
   // Delete hook
   const { data: ActivateData, refresh } = useActivatePosts("Delete");
+  // const { data: Activate, refresh: newActivate } = useActivatePosts("Active");
   // Close logic:
 
   const handleDeletePost = useCallback(
@@ -79,19 +80,19 @@ const EditCloseButton: React.FC<EditCloseButtonProps> = ({
     <div className="flex justify-between items-center mt-3">
       <button
         onClick={() => onEdit(id)}
-        className="flex items-center text-blue-600 hover:text-blue-800 text-xs font-medium transition-colors duration-200"
+        className="flex items-center justify-center rounded-md p-2 bg-blue-500 text-white w-full hover:bg-blue-600 text-xs font-medium transition-colors duration-200"
       >
         <FaEdit className="mr-1" size={12} />
         Edit
       </button>
-      <button
-        onClick={() => handleDeletePost(id)}
+      {/* <button
+        onClick={() => newActivate(id)}
         className="flex items-center text-red-600 hover:text-red-800 text-xs font-semibold transition-colors duration-200"
-      >
+      > */}
         {/* <FaTimes className="mr-1" size={12} /> */}
-        <MdOutlineDelete className="mr-1" size={12} />
+        {/* <MdOutlineDelete className="mr-1" size={12} />
         Delete
-      </button>
+      </button> */}
     </div>
   );
 };

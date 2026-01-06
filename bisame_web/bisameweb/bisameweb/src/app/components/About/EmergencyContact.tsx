@@ -30,7 +30,7 @@ const EmergencyContact: React.FC = () => {
             </div>
             <div className="bg-gray-50 rounded-2xl p-6">
               <h4 className="font-semibold text-gray-900 mb-2">Email Support</h4>
-              <p className="text-lg font-semibold text-orange-500">bisamecustomercare@gmail.com</p>
+              <p className=" font-semibold text-orange-500">bisamecustomercare@gmail.com</p>
             </div>
           </div>
           

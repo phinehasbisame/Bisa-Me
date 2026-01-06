@@ -19,6 +19,7 @@ import {
   SelectedItems,
 } from "../interfaces";
 import { isBenefitArray } from "../utils";
+import { SelectedDuration } from "../types";
 
 const PromoContext = createContext<PromoContextProps | null>(null);
 
@@ -39,6 +40,13 @@ const PromotionContext: React.FC<PromotionChildrenProps> = ({ children }) => {
     []
   );
   const [promoPlan, setPromoPlan] = useState<PromotionPlanData>();
+
+  const [selectedDuration, setSelectedDuration] =
+    useState<SelectedDuration | null>(null);
+
+  const handleSelectedDuration = (duration: SelectedDuration) => {
+    setSelectedDuration(duration);
+  };
 
   console.log(promotionSelected);
 
@@ -206,6 +214,7 @@ const PromotionContext: React.FC<PromotionChildrenProps> = ({ children }) => {
       promoPlan,
       selectedPromotion,
       sectionItems,
+      selectedDuration,
       handleSelectPromotion,
       handlePromoNavChange,
       handleRemoveSelectedProduct,
@@ -222,6 +231,7 @@ const PromotionContext: React.FC<PromotionChildrenProps> = ({ children }) => {
       handlePromoPlan,
       handleSectionItems,
       handleRemoveSectionItem,
+      handleSelectedDuration,
     }),
     [
       promoNav,
@@ -234,6 +244,7 @@ const PromotionContext: React.FC<PromotionChildrenProps> = ({ children }) => {
       promoPlan,
       selectedPromotion,
       sectionItems,
+      selectedDuration,
       handleSelectPromotion,
       handlePromoNavChange,
       handleRemoveSelectedProduct,
@@ -250,6 +261,7 @@ const PromotionContext: React.FC<PromotionChildrenProps> = ({ children }) => {
       handlePromoPlan,
       handleSectionItems,
       handleRemoveSectionItem,
+      handleSelectedDuration,
     ]
   );
 

@@ -1,8 +1,9 @@
 import Image from "next/image";
-import React from "react";
 import { FaEdit, FaMapMarkerAlt, FaTimes } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
 import { Product } from "./types";
+import { IoRocketOutline } from "react-icons/io5";
+import Link from "next/link";
 
 interface ActiveProductCardProps {
   activeProducts: Product[];
@@ -26,7 +27,7 @@ const ActiveProductCard = ({
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 mt-6 ">
       {activeProducts.map((product) => {
-        const imgSrc = product.images[0].imageUrl;
+        const imgSrc = product.images[0].imageUrl ?? product.images[1].imageUrl;
         return (
           <div
             key={product.id}
@@ -68,32 +69,39 @@ const ActiveProductCard = ({
                   : `GH₵ ${product.price.toLocaleString() as string}`}
               </p>
               {/* Edit and Close buttons */}
-              <div className="flex justify-between items-center mt-3">
+              <div className="flex justify-between items-center gap-2 mt-3">
                 <button
                   onClick={() => onEdit(product.id)}
-                  className="flex items-center text-blue-600 hover:text-blue-800 text-xs font-medium transition-colors duration-200"
+                  className="flex items-center justify-center rounded-md p-2 bg-blue-500 text-white hover:bg-blue-600 text-xs font-medium transition-colors duration-200 w-1/2"
                 >
                   <FaEdit className="mr-1" size={12} />
                   Edit
                 </button>
                 <button
                   onClick={() => onClose(product.id)}
-                  className="flex items-center text-red-600 hover:text-red-800 text-xs font-medium transition-colors duration-200"
+                  className="flex items-center justify-center rounded-md p-2 bg-red-500 text-white hover:bg-red-600 text-xs font-medium transition-colors duration-200 w-1/2"
                   disabled={statusLoading}
                 >
                   <FaTimes className="mr-1" size={12} />
                   {statusLoading ? "Closing..." : "Close"}
                 </button>
 
-                <button
+                {/* <button
                   onClick={() => onDeletePost(product.id)}
                   className="flex items-center text-red-600 hover:text-red-800 text-xs font-semibold transition-colors duration-200"
-                >
-                  {/* <FaTimes className="mr-1" size={12} /> */}
-                  <MdOutlineDelete className="mr-1" size={12} />
+                > */}
+                {/* <FaTimes className="mr-1" size={12} /> */}
+                {/* <MdOutlineDelete className="mr-1" size={12} />
                   Delete
-                </button>
+                </button> */}
               </div>
+              <Link
+                href={`/dashboard/promotion`}
+                className="flex items-center justify-center rounded-md hover:bg-gray-100 transition duration-300 ease-in-out gap-2 border my-2 text-xs border-blue-700 text-blue-700 p-2"
+              >
+                <IoRocketOutline color="blue" />
+                Boast Ads
+              </Link>
             </div>
           </div>
         );

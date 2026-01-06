@@ -6,9 +6,9 @@ import { Product } from "./types";
 import { useMyPostData } from "./useMyPostData";
 import { getImageUrl } from "../ProductDetails/utils/imageUtils";
 import { getFirstImageUrl } from "./utils/imageHelper";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import toast from "react-hot-toast";
-import EditProductModal from "./EditProductModal";
+import EditProductModalProvider from "./EditProductModal";
 import { usePostUpdateFetch } from "./usePostUpdateFetch";
 import { usePostUpdatePost } from "./usePostUpdatePost";
 import { useMyPostDataStatus } from "./useMyPostDataStatus";
@@ -171,11 +171,11 @@ const UpdateProducts = () => {
 
   return (
     <>
-      <EditProductModal
+      <EditProductModalProvider
         id={editProduct?.id as string}
         isOpen={editModalOpen}
         product={editProduct}
-        postUpdateInfo={editingProductData}
+        // postUpdateInfo={editingProductData}
         loading={editingProductLoading}
         error={editingProductError}
         onUpdate={handleUpdateProduct}
@@ -256,4 +256,4 @@ const UpdateProducts = () => {
   );
 };
 
-export default UpdateProducts;
+export default memo(UpdateProducts);

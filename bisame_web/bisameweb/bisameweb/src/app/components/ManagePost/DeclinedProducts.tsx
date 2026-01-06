@@ -4,12 +4,10 @@ import { FaEdit, FaMapMarkerAlt, FaTimes } from "react-icons/fa";
 import { FiInbox } from "react-icons/fi";
 import { Product } from "./types";
 import { useMyPostData } from "./useMyPostData";
-import { getImageUrl } from "../ProductDetails/utils/imageUtils";
-import { useState } from "react";
-import EditProductModal from "./EditProductModal";
+import { memo, useState } from "react";
+import EditProductModalProvider from "./EditProductModal";
 import toast from "react-hot-toast";
 import { usePostUpdateFetch } from "./usePostUpdateFetch";
-import { getFirstImageUrl } from "./utils/imageHelper";
 
 const DeclinedProducts = () => {
   // Use the new hook with status filter
@@ -128,11 +126,11 @@ const DeclinedProducts = () => {
 
   return (
     <>
-      <EditProductModal
+      <EditProductModalProvider
         id={editProduct?.id as string}
         isOpen={editModalOpen}
         product={editProduct}
-        postUpdateInfo={editingProductData}
+        // postUpdateInfo={editingProductData}
         loading={editingProductLoading}
         error={editingProductError}
         onUpdate={handleUpdateProduct}
@@ -202,4 +200,4 @@ const DeclinedProducts = () => {
   );
 };
 
-export default DeclinedProducts;
+export default memo(DeclinedProducts);

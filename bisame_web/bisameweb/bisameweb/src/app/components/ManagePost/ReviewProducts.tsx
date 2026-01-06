@@ -2,7 +2,7 @@
 import { useMyPostData } from "./useMyPostData";
 import { getImageUrl } from "../ProductDetails/utils/imageUtils";
 import { getFirstImageUrl } from "./utils/imageHelper";
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import ErrorPage from "./components/ErrorPage";
 import NoProductFound from "./components/NoProductFound";
 import LoadingPage from "./components/LoadingPage";
@@ -10,11 +10,12 @@ import PostCard from "./components/PostCard";
 import CardContainer from "./components/CardContainer";
 import { usePostContext } from "./context/PostContext";
 import { Product } from "./types";
-import Swal from "sweetalert2";
 import useActivatePosts from "./hooks/use-change-post-status";
+import { usePostUpdatePost } from "./usePostUpdatePost";
+import { UpdateProductProps } from "./interfaces";
 
 const ReviewProducts = () => {
-  const { data, loading, error } = useMyPostData("Reviewing");
+  const { data, loading: isEditLoading, error: editProductError } = useMyPostData("Reviewing");
   const reviewProducts: Product[] = data?.results || [];
 
   const {
@@ -24,9 +25,9 @@ const ReviewProducts = () => {
     handleCloseModal,
     handleEditProductId,
   } = usePostContext();
+   const { updatePost, result: updateResult } = usePostUpdatePost();
 
   const [imgSrcMap, setImgSrcMap] = useState<Record<string, string>>({});
-
 
   const handleEdit = (productId: string) => {
     handleOpenModal();
@@ -47,19 +48,23 @@ const ReviewProducts = () => {
     setImgSrcMap((prev) => ({ ...prev, [productId]: "/f4.png" }));
   };
 
-  if (loading) {
+  const handleUpdateProduct = (reqBody: UpdateProductProps) => {
+    updatePost(reqBody);
+    // Do not close modal here; wait for updateResult.success
+  };
+
+  if (isEditLoading) {
     return <LoadingPage status="review" />;
   }
 
-  if (error) {
-    return <ErrorPage error={error} />;
+  if (editProductError) {
+    return <ErrorPage error={editProductError} />;
   }
 
   if (!reviewProducts.length) {
     return <NoProductFound />;
   }
 
-  
   return (
     <CardContainer>
       {reviewProducts.map((product) => {
@@ -75,12 +80,15 @@ const ReviewProducts = () => {
             key={normalizedProduct._id ?? normalizedProduct.id}
             editProductId={editProductId}
             isOpen={isOpen}
+            isEditLoading={isEditLoading}
+            editProductError={editProductError}
             onCancel={handleCancelEdit}
             imgSrc={imgSrc}
             product={normalizedProduct}
             onImageError={handleImageError}
             onClose={handleClose}
             onEdit={handleEdit}
+            onUpdateProduct={handleUpdateProduct}
           />
         );
       })}
@@ -88,4 +96,4 @@ const ReviewProducts = () => {
   );
 };
 
-export default ReviewProducts;
+export default memo(ReviewProducts);

@@ -6,7 +6,7 @@ import { Product } from "./types";
 import { useMyPostData } from "./useMyPostData";
 import { useMyPostDataStatus } from "./useMyPostDataStatus";
 import { getImageUrl } from "../ProductDetails/utils/imageUtils";
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
@@ -293,4 +293,4 @@ const ClosedProducts = () => {
   );
 };
 
-export default ClosedProducts;
+export default memo(ClosedProducts);

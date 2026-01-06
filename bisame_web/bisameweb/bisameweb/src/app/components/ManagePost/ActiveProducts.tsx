@@ -6,7 +6,7 @@ import { useMyPostData } from "./useMyPostData";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useMyPostDataStatus } from "./useMyPostDataStatus";
-import EditProductModal from "./EditProductModal";
+import EditProductModalProvider from "./EditProductModal";
 import { usePostUpdateFetch } from "./usePostUpdateFetch";
 import { usePostUpdatePost } from "./usePostUpdatePost";
 import { UpdateProductProps } from "./interfaces";
@@ -251,7 +251,17 @@ const ActiveProducts = () => {
         onImageError={handleImageError}
       />
 
-      <EditProductModal
+      <EditProductModalProvider
+        id={editProduct?.id as string}
+        isOpen={editModalOpen}
+        product={editProduct}
+        // postUpdateInfo={editingProductData}
+        loading={editingProductLoading}
+        error={editingProductError}
+        onUpdate={handleUpdateProduct}
+        onCancel={handleCancelEdit}
+      />
+      {/* <EditProductModal
         id={editProduct?.id as string}
         isOpen={editModalOpen}
         product={editProduct}
@@ -260,7 +270,7 @@ const ActiveProducts = () => {
         error={editingProductError}
         onUpdate={handleUpdateProduct}
         onCancel={handleCancelEdit}
-      />
+      /> */}
 
       {/* Optionally show error below the grid */}
       {statusError && (

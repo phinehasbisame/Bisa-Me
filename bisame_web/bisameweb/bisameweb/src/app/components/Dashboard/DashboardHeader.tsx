@@ -145,7 +145,7 @@ const DashboardHeader = () => {
 
             {/* Dropdown Account Info */}
             {showAccountInfo && (
-              <div className="absolute right-0 top-full mt-2 z-40 w-full min-w-[90vw] max-w-7xl sm:min-w-[320px] sm:max-w-md animate-in slide-in-from-top-2 duration-200">
+              <div className="absolute right-0 top-full mt-2 z-[99] w-full min-w-[90vw] max-w-7xl sm:min-w-[320px] sm:max-w-md animate-in slide-in-from-top-2 duration-200">
                 <div className="bg-white rounded-lg shadow-lg border border-gray-200 w-full">
                   {/* Close button overlay */}
                   <div className="relative">

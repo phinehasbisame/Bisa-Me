@@ -2,18 +2,22 @@ import Image from "next/image";
 import React from "react";
 import EditCloseButton from "./EditCloseButton";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import EditModal from "./EditModal";
 import { Product } from "../types";
+import EditProductModalProvider from "../EditProductModal";
+import { UpdateProductProps } from "../interfaces";
 
 interface PostCardProps {
   product: Product;
   imgSrc: string;
   isOpen: boolean;
   editProductId: string | null;
+  isEditLoading: boolean;
+  editProductError: string | null;
   onEdit: (productId: string) => void;
   onImageError: (productId: string) => void;
   onClose: (productId: string) => void;
   onCancel: () => void;
+  onUpdateProduct: (reqBody: UpdateProductProps) => void;
 }
 
 const PostCard: React.FC<PostCardProps> = ({
@@ -21,10 +25,13 @@ const PostCard: React.FC<PostCardProps> = ({
   imgSrc,
   isOpen,
   editProductId,
+  isEditLoading,
+  editProductError,
   onEdit,
   onClose,
   onImageError,
   onCancel,
+  onUpdateProduct,
 }) => {
   const priceNumber =
     typeof product.price === "number" ? product.price : Number(product.price);
@@ -73,7 +80,17 @@ const PostCard: React.FC<PostCardProps> = ({
       </div>
 
       {isOpen && editProductId === product.id && (
-        <EditModal id={product.id} product={product} onCancel={onCancel} />
+        <EditProductModalProvider
+          id={product?.id as string}
+          isOpen={isOpen}
+          product={product}
+          // postUpdateInfo={editingProductData}
+          loading={isEditLoading}
+          error={editProductError}
+          onUpdate={onUpdateProduct}
+          onCancel={onCancel}
+        />
+        // <EditModal id={product.id} product={product} onCancel={onCancel} />
       )}
     </>
   );

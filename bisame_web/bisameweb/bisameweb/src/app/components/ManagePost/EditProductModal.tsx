@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Product } from "./types";
+import { useState, useRef, useMemo, memo, useEffect } from "react";
 import toast from "react-hot-toast";
 import { UpdateProductProps } from "./interfaces";
 import { useImageManager } from "./hooks/use-image-handler";
@@ -8,32 +7,47 @@ import { useImageUpload } from "./hooks/use-image-upload";
 import { LuLoaderCircle } from "react-icons/lu";
 import EditImage from "./components/EditImage";
 import { useProductData } from "../ProductDetails/hooks/useProductData";
+import LocationSelector from "../PostAd/LocationSelector";
+import { EditPostFormProvider } from "./context/EditPostContext";
+import { Group } from "@/app/sell/allcategory/utils/categories";
+import {
+  handleEditGroupInput,
+  HandleGroupInputProps,
+} from "./utils/use-edit-post-category";
+import useFetchEditFormOptions from "./hooks/use-fetch-form-options";
+import EditPostAttributes from "./components/EditPostAttributes";
+import EditActionButtons from "./EditActionButtons";
+import { useEditPostForm } from "./hooks/use-edit-post-ads";
 
-interface ProductEditData {
-  categoryGroup?: string;
-  category?: string;
-  subCategory?: string;
-  childCategory?: string | null;
-  title?: string;
-  name?: string;
-  location?: string;
-  attributes?: Record<string, any>;
-  description?: string;
-  price?: string | number;
-  negotiable?: boolean | string;
-  contactNumber?: string;
-  images?: any;
-  [key: string]: any;
-}
+// Helper function to format attribute keys to readable labels
+const formatLabel = (key: string): string => {
+  return key
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (str) => str.toUpperCase())
+    .trim();
+};
 
-interface EditProductModalProps {
-  id: string; // Product ID for fetching
-  isOpen: boolean; // Control modal visibility
-  product?: Product | null; // Optional: Fallback product data
-  postUpdateInfo?: any; // Optional: Additional update info
-  loading?: boolean; // Optional: External loading state
-  error?: unknown; // Optional: External error state
-  onUpdate: (reqBody: UpdateProductProps) => void;
+// Define which attributes are required based on category
+const getRequiredAttributes = (
+  categoryGroup: string,
+  category: string
+): string[] => {
+  if (categoryGroup === "Jobs") {
+    return ["employmentType", "jobType", "workSetup"];
+  }
+  return [];
+};
+
+import { Product } from "./types/index";
+import dynamic from "next/dynamic";
+
+export interface EditProductModalProps {
+  id: string;
+  isOpen: boolean;
+  product?: Product | null;
+  loading?: boolean;
+  error?: unknown;
+  onUpdate: (payload: UpdateProductProps) => void;
   onCancel: () => void;
   userName?: string;
 }
@@ -42,7 +56,6 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   id,
   isOpen,
   product,
-  postUpdateInfo,
   loading: externalLoading,
   error: externalError,
   onUpdate,
@@ -53,7 +66,6 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const imageRef = useRef<HTMLInputElement | null>(null);
 
-  // Fetch product data by ID (can be skipped if product prop is provided)
   const {
     product: newProductData,
     isLoading: isLoadingProduct,
@@ -61,22 +73,109 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     error: errorProduct,
   } = useProductData(id);
 
-  // Use external loading/error if provided, otherwise use fetch hook states
   const isLoading = externalLoading ?? isLoadingProduct;
   const loadError = externalError ?? errorProduct;
-
-  // Prioritize postUpdateInfo, then newProductData, then product prop
   const productData = newProductData || product;
 
-  // Initialize form data from fetched product
-  const { formData, handleChange, updateField } = useProductForm({
-    productData: productData,
-  });
+  const { formData, handleChange, updateField, resetAttributes } =
+    useProductForm({
+      productData: productData,
+    });
+    
 
-  // Initialize image upload
+  console.log(formData)
+  console.log(formData)
+  console.log(formData)
+  console.log(formData)
+  console.log(formData)
+  console.log(formData)
+  console.log(formData)
+  console.log(formData)
+
+  const [group, setGroup] = useState<Group>(formData?.categoryGroup as Group);
+
+  // Track whether we're using dynamically fetched attributes
+  const [isDynamicSchema, setIsDynamicSchema] = useState(false);
+
+  // Store dynamic attributes separately to avoid confusion
+  const [dynamicAttributes, setDynamicAttributes] = useState<
+    Record<string, any>
+  >({});
+
+  const {
+    selectedService: newSelectedService,
+    selectedLocation: newSelectedLocation,
+    isSubmitting: hasSubmitting,
+    handleServiceSelect,
+    handleLocationSelect,
+    handleImagesChange,
+    handleClearService,
+  } = useEditPostForm();
+
+  const { data: fetchFormOptions } = useFetchEditFormOptions(
+    id,
+    newSelectedService?.category,
+    newSelectedService?.subcategory,
+    group
+  );
+
+  // NOTE: Reset attributes when group or service changes
+  useEffect(() => {
+    if (newSelectedService?.category || newSelectedService?.subcategory) {
+      // When service changes, clear all attributes and mark as dynamic schema
+      setIsDynamicSchema(true);
+      setDynamicAttributes({});
+
+      // Clear attributes from main form state
+      if (resetAttributes) {
+        resetAttributes();
+      } else {
+        updateField("attributes", {});
+      }
+    }
+  }, [newSelectedService?.category, newSelectedService?.subcategory]);
+
+  useEffect(() => {
+    if (group && group !== formData?.categoryGroup) {
+      // When group changes, clear all attributes and mark as dynamic schema
+      setIsDynamicSchema(true);
+      setDynamicAttributes({});
+
+      // Clear attributes from main form state
+      if (resetAttributes) {
+        resetAttributes();
+      } else {
+        updateField("attributes", {});
+      }
+    }
+  }, [group]);
+
+  // **Handle dynamic attribute changes - store in separate state**
+  const handleDynamicAttributeChange = (field: string, value: string) => {
+    setDynamicAttributes((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const props = useMemo(
+    () => ({
+      onServiceSelect: handleServiceSelect,
+      selectedService: {
+        category: newSelectedService?.category ?? formData?.category,
+        subcategory: newSelectedService?.subcategory ?? formData?.subCategory,
+      },
+    }),
+    [
+      handleServiceSelect,
+      newSelectedService,
+      formData?.category,
+      formData?.subCategory,
+    ]
+  );
+
   const { uploadImages } = useImageUpload({ userName });
 
-  // Initialize image manager with upload handler
   const {
     images,
     isUploading,
@@ -103,7 +202,16 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     onUpload: uploadImages,
   });
 
-  // Handle success response
+  // Legacy attribute handler (only used if not in dynamic mode)
+  const handleAttributeChange = (key: string, value: any) => {
+    if (!isDynamicSchema) {
+      updateField("attributes", {
+        ...formData?.attributes,
+        [key]: value,
+      });
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData || isSubmitting) return;
@@ -113,16 +221,20 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     try {
       const imageUrls = getImageUrls();
 
+      // **CRITICAL: Use ONLY dynamic attributes if in dynamic mode**
+      const finalAttributes = isDynamicSchema
+        ? dynamicAttributes
+        : formData.attributes || {};
+
       const reqBody: UpdateProductProps = {
         id,
         title: formData.title || formData.name,
         description: formData.description,
-        price: Number(formData.price),
+        price: Number(formData.price) || 0,
         location: formData.location,
         category: formData.category || "",
         subCategory: formData.subCategory || "",
         childCategory: formData.childCategory || null,
-        // categoryGroup: formData.categoryGroup || "",
         contactNumber: formData.contactNumber || "",
         images: imageUrls.map((url, index) => ({
           imageUrl: url,
@@ -133,7 +245,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
           typeof formData.negotiable === "boolean"
             ? formData.negotiable
             : formData.negotiable === "true",
-        attributes: formData.attributes || {},
+        attributes: finalAttributes, // ← Only current schema attributes
       };
 
       await onUpdate(reqBody);
@@ -153,13 +265,11 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     }
   };
 
-  // Don't render if not open
   if (!isOpen) return null;
 
-  // Loading state
   if (isLoading) {
     return (
-      <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
+      <div className="fixed inset-0 z-[99] flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
         <div className="bg-white rounded-lg shadow-2xl max-w-md w-full mx-4 p-6 flex flex-col items-center">
           <LuLoaderCircle className="w-12 h-12 text-orange-400 animate-spin mb-4" />
           <p className="text-gray-500 text-sm">Loading product data...</p>
@@ -168,7 +278,6 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     );
   }
 
-  // No data state
   if (!productData || !formData) {
     return (
       <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
@@ -196,11 +305,16 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     imageRef.current?.click();
   };
 
+  const requiredAttributes = getRequiredAttributes(
+    formData.categoryGroup || "",
+    formData.category || ""
+  );
+
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[99] flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-lg shadow-2xl max-w-2xl w-full mx-4 p-6 relative overflow-y-auto max-h-[90vh]"
+        className="bg-white rounded-lg shadow-2xl max-w-2xl w-full mx-4 p-6 relative overflow-y-auto scrollbar-hide max-h-[90vh]"
       >
         <button
           type="button"
@@ -216,7 +330,6 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
         </h2>
 
         <div className="space-y-6">
-          {/* Image Management Section using EditImage component */}
           <EditImage
             images={images}
             imageRef={imageRef}
@@ -236,13 +349,55 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             maxImages={10}
             maxFileSizeMB={5}
           />
+
           <div>
             <label className="block text-sm font-semibold mb-1">
-              Product Name
+              Post Group
+            </label>
+            <select
+              className="border w-full p-2 rounded text-sm"
+              value={group ?? formData.categoryGroup}
+              onChange={(event) => {
+                setGroup(event.target.value as Group);
+                handleClearService();
+              }}
+            >
+              <option value="Buy and Sell">Products</option>
+              <option value="Books">Books</option>
+              <option value="Food">Foods</option>
+              <option value="Jobs">Jobs</option>
+              <option value="Job Seekers">Job Seekers</option>
+              <option value="Health">Health</option>
+              <option value="Services">Services</option>
+            </select>
+          </div>
+
+          {formData.categoryGroup
+            ? handleEditGroupInput(
+                group ?? (formData.categoryGroup as Group),
+                props as HandleGroupInputProps
+              )
+            : null}
+
+          <LocationSelector
+            selectedLocation={
+              newSelectedLocation.city && newSelectedLocation.region
+                ? newSelectedLocation
+                : {
+                    city: formData.location,
+                    region: "",
+                  }
+            }
+            onSelect={handleLocationSelect}
+          />
+
+          <div>
+            <label className="block text-sm font-semibold mb-1">
+              Product Title
             </label>
             <input
               name="title"
-              value={formData.title || formData.name || ""}
+              value={formData.title || ""}
               onChange={handleChange}
               className="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
@@ -263,66 +418,92 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {formData.price !== undefined && formData.price !== "" && (
+              <div>
+                <label className="block text-sm font-semibold mb-1">
+                  Price
+                </label>
+                <input
+                  name="price"
+                  type="number"
+                  value={formData.price}
+                  onChange={handleChange}
+                  className="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Dynamic Attributes Section */}
+          <EditPostAttributes
+            data={fetchFormOptions?.data as unknown[]}
+            formData={
+              isDynamicSchema ? { attributes: dynamicAttributes } : formData
+            }
+            onAttributeChange={
+              isDynamicSchema
+                ? handleDynamicAttributeChange
+                : handleAttributeChange
+            }
+            requiredAttributes={requiredAttributes}
+            formatLabel={formatLabel}
+            onDynamicAttributeChange={handleDynamicAttributeChange}
+          />
+
+          {formData.contactNumber !== undefined && (
             <div>
               <label className="block text-sm font-semibold mb-1">
-                Location
+                Contact Number
               </label>
               <input
-                name="location"
-                value={formData.location}
+                name="contactNumber"
+                type="tel"
+                value={formData.contactNumber}
                 onChange={handleChange}
                 className="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
+                placeholder="Enter contact number"
               />
             </div>
+          )}
 
-            <div>
-              <label className="block text-sm font-semibold mb-1">Price</label>
+          {formData.negotiable !== undefined && (
+            <div className="flex items-center">
               <input
-                name="price"
-                type="number"
-                value={formData.price}
-                onChange={handleChange}
-                className="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
+                type="checkbox"
+                name="negotiable"
+                checked={
+                  typeof formData.negotiable === "boolean"
+                    ? formData.negotiable
+                    : formData.negotiable === "true"
+                }
+                onChange={(e) => updateField("negotiable", e.target.checked)}
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
+              <label className="ml-2 text-sm font-medium text-gray-700">
+                Price is negotiable
+              </label>
             </div>
-          </div>
+          )}
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex gap-4 mt-8">
-          <button
-            type="button"
-            onClick={onCancel}
-            className="flex-1 px-4 py-2 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
-            disabled={isSubmitting || isUploading}
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="flex-1 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 font-semibold transition-colors flex items-center justify-center disabled:bg-gray-400 disabled:cursor-not-allowed"
-            disabled={isSubmitting || isUploading}
-          >
-            {isSubmitting || isUploading ? (
-              <span className="flex items-center">
-                <LuLoaderCircle className="w-4 h-4 animate-spin mr-2" />
-                {isUploading ? "Uploading..." : "Updating..."}
-              </span>
-            ) : showSuccess ? (
-              <span className="flex items-center">
-                <span className="mr-2">✅</span> Success!
-              </span>
-            ) : (
-              "Update Product"
-            )}
-          </button>
-        </div>
+        <EditActionButtons
+          onCancel={onCancel}
+          showSuccess={showSuccess}
+          isSubmitting={isSubmitting}
+          isUploading={isUploading}
+        />
       </form>
     </div>
   );
 };
 
-export default React.memo(EditProductModal);
+const EditProductModalProvider = ({
+  ...props
+}: EditProductModalProps) => (
+  <EditPostFormProvider>
+    <EditProductModal {...props} />
+  </EditPostFormProvider>
+);
+
+export default memo(EditProductModalProvider);

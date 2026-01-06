@@ -16,7 +16,7 @@ interface UseFetchProductByIdReturn<T> {
   refetch: () => void;
 }
 
-const useFetchProductById = <T = unknown>(
+const useFetchEditProductById = <T = unknown>(
   productId: string,
   enabled: boolean = true
 ): UseFetchProductByIdReturn<T> => {
@@ -25,7 +25,6 @@ const useFetchProductById = <T = unknown>(
     enabled && productId
       ? `${buildProfileUrl(LISTINGS_ENDPOINTS.list)}/${productId}`
       : null;
-
 
   // Memoized fetcher function
   const fetcher = useCallback(
@@ -42,24 +41,24 @@ const useFetchProductById = <T = unknown>(
           throw new Error("No response data from server");
         }
 
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
-        console.log(res.data)
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
+        console.log(res.data);
         return res.data;
       } catch (error: any) {
         // Re-throw with more context
@@ -78,7 +77,7 @@ const useFetchProductById = <T = unknown>(
     error,
     isLoading: isLoadingProduct,
     mutate: refresh,
-  } = useSWR<ListingDetailsResponse<T>>(
+  } = useSWR<ListingDetailsResponse<T> | T>(
     newApiUrl, // Will be null when disabled or no productId
     fetcher,
     {
@@ -107,11 +106,11 @@ const useFetchProductById = <T = unknown>(
   }, [productId, enabled, refetch]);
 
   return {
-    newProductData: productData?.data,
+    newProductData: productData as T,
     isLoadingProduct,
     errorProduct: error,
     refetch,
   };
 };
 
-export default useFetchProductById;
+export default useFetchEditProductById;

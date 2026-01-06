@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 import Label from "./Label";
 import Button from "./Button";
 import { GripVertical, X } from "lucide-react";
@@ -110,7 +109,7 @@ const EditImage: React.FC<EditImageProps> = ({
 
       {/* Image grid */}
       {images.length > 0 && (
-        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+        <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
           {images.map((img, idx) => {
             const src = img.preview || img.imageUrl || "";
 

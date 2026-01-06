@@ -38,7 +38,7 @@ export default function RootLayout({
             <NotificationBar />
             <TopNav />
             <MiddleNav />
-            {/* <BottomNav /> */}
+            <BottomNav />
           </ConditionalNavigation>
           <SWRProvider>{children}</SWRProvider>
           <Toaster position="top-right" />

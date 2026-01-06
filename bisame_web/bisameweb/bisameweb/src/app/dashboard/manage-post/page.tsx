@@ -2,6 +2,9 @@ import { BottomNavigation } from "@/app/components/BottomNavigation";
 import MobileDashboardOptions from "@/app/components/Dashboard/MobileDashboardOptions";
 import DashboardSideBar from "@/app/components/DashboardSideBar/DashboardSideBar";
 import ProductTabs from "@/app/components/ManagePost/ProductTabs";
+import { memo } from "react";
+
+export const revalidate = 1 // Constantly revalidate this page
 
 const PostPage = () => {
   return (
@@ -20,4 +23,4 @@ const PostPage = () => {
   );
 };
 
-export default PostPage;
+export default memo(PostPage);

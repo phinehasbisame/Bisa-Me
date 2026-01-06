@@ -1,3 +1,4 @@
+import { memo } from "react" ;
 import MainBanner from "./MainBanner";
 import SideBanner from "./SideBanner";
 
@@ -24,4 +25,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default memo(Hero);

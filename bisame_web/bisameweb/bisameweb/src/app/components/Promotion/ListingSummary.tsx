@@ -28,6 +28,7 @@ const ListingSummary: React.FC<ListingSummaryProps> = ({
     promoPlan,
     selectedPromotion,
     sectionItems,
+    selectedDuration,
   } = usePromoContext();
 
   // router
@@ -42,9 +43,36 @@ const ListingSummary: React.FC<ListingSummaryProps> = ({
   // state to store phone number
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  console.log(selectedDuration);
+  console.log(selectedDuration);
+  console.log(selectedDuration);
+  console.log(selectedDuration);
+  console.log(selectedDuration);
+
   const [isCheckingStatus, setIsCheckingStatus] = useState(false);
   const { promoData } = useFetchPromotions();
-  console.log(promoData);
+  console.log(promoData)
+  console.log(promoData)
+  console.log(promoData)
+  console.log(promoData)
+  console.log(promoData)
+  console.log(promoData)
+  console.log(promoData)
+  console.log(promoData)
+  console.log(promoData)
+  console.log(
+    promoData?.results
+      ?.find(({ promotionPlanId }) => promoPlan?.id === promotionPlanId)
+      ?.promotionPlanSnapshot.promotionDurationList
+  );
+
+  // ?.find(
+  //       ({ label, value, discountedPrice }) =>
+  //         selectedDuration?.label == label &&
+  //         selectedDuration.value == value &&
+  //         selectedDuration.discountedPrice == discountedPrice
+  //     )
+
   const selectedPromoId = promoData?.results.find(
     ({ promotionPlanId }) => promoPlan?.id === promotionPlanId
   )?.id;
@@ -122,11 +150,14 @@ const ListingSummary: React.FC<ListingSummaryProps> = ({
     // Trigger an api fetch to get the status of the payment
     try {
       await refresh();
-      if (paymentStatus.status == TransactionStatus.Successful) {
+      if (paymentStatus?.status == TransactionStatus.Successful) {
         toast.success("Payment successful");
         router.push("/dashboard/purchases");
-      } else if(paymentStatus.status == TransactionStatus.Processing){
+      } else if (paymentStatus?.status == TransactionStatus.Processing) {
         toast.success("Processing...");
+      } else if(paymentStatus?.status == TransactionStatus.Failed){
+        toast.error("Failed to make payment. Check your account balance")
+        router.push("/dashboard/purchases")
       }
     } catch (error) {
       if (error instanceof Error) {

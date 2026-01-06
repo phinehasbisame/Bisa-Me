@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { ObjectProps } from "./interfaces";
+import { SelectedDuration } from "./types";
 
 interface promoDurationProps {
   label: string;
@@ -19,6 +20,7 @@ interface PromoDurationDropdownProps {
   handlePriceChange?: (price: number) => void;
   handleDiscountedPrice: (discountedPrice: number) => void;
   handleSelectPromotion: (data: ObjectProps) => void;
+  handleSelectedDuration: (duration: SelectedDuration) => void;
 }
 
 const PromoDurationDropdown: React.FC<PromoDurationDropdownProps> = ({
@@ -29,6 +31,7 @@ const PromoDurationDropdown: React.FC<PromoDurationDropdownProps> = ({
   handleOpenDropdown,
   handleDiscountedPrice,
   handleSelectPromotion,
+  handleSelectedDuration,
 }) => {
   // Automatically set the initial values of values and label
   useEffect(() => {
@@ -53,6 +56,7 @@ const PromoDurationDropdown: React.FC<PromoDurationDropdownProps> = ({
                   handleSelectPromotion({ value, label });
                   handleOpenDropdown();
                   handleDiscountedPrice(discountedPrice);
+                  handleSelectedDuration({ label, value, discountedPrice });
                   // handlePriceChange(price);
                 }}
               >

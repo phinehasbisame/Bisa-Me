@@ -50,6 +50,7 @@ const RegionList = ({
             className="border-b border-gray-100 last:border-b-0"
           >
             <button
+              type="button"
               id={regionId}
               onClick={() => onRegionSelect(regionInfo.region)}
               aria-expanded={isExpanded}
@@ -82,6 +83,7 @@ const RegionList = ({
                 {regionInfo.cities.map((city: string, index: number) => {
                   return (
                     <button
+                      type="button"
                       key={index}
                       onClick={() => onLocationSelect(city, region)}
                       className={`w-full text-left p-4 pl-8 hover:bg-white transition-colors border-l-4 ${

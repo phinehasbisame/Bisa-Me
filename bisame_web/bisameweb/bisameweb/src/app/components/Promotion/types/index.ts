@@ -53,7 +53,7 @@ export interface PromotionPlanSnapshot {
 
   benefits: PromoBenefit[];
   features: PromoFeature[];
-  promotionDurationList: PromotionDuration[];
+  promotionDurationList: SelectedDuration[];
 }
 
 export interface UserPromotion {
@@ -64,6 +64,8 @@ export interface UserPromotion {
   promotionPlanId: string;
 
   pricingOption: PricingOption;
+
+  promotionDurationList: SelectedDuration[]
 
   promotedItems: string[];
   sectionItems: SectionItem[];
@@ -81,6 +83,12 @@ export interface UserPromotion {
   updatedBy: string | null;
 
   __v: number;
+}
+
+export interface SelectedDuration {
+  label: string;
+  value: number;
+  discountedPrice: number
 }
 
 export interface PaginatedUserPromotions {

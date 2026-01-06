@@ -1,8 +1,6 @@
 "use client";
 
-import axios, { AxiosResponse } from "axios";
-import useSWRMutation from "swr/mutation";
-import { usePromoContext } from "../context/PromotionContext";
+import { AxiosResponse } from "axios";
 import useSWR from "swr";
 import {
   API_ENDPOINTS,

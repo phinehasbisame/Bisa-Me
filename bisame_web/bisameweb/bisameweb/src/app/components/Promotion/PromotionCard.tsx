@@ -103,7 +103,7 @@ const PromotionCard: React.FC<PromotionCardProps> = ({
     handleOpenFullList,
   } = usePromoCard();
 
-  const { handlePromoNavChange, handleSelectPromotion } = usePromoContext();
+  const { handlePromoNavChange, handleSelectPromotion, handleSelectedDuration } = usePromoContext();
 
   console.log(promoName);
 
@@ -282,6 +282,7 @@ const PromotionCard: React.FC<PromotionCardProps> = ({
                   promoDuration={promoDuration}
                   // handlePriceChange={handlePriceChange}
                   handleDiscountedPrice={handleDiscountedPrice}
+                  handleSelectedDuration={handleSelectedDuration}
                 />
               </div>
             </div>

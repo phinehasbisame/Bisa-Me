@@ -16,13 +16,14 @@ const useFetchFormOptions = (
       }>(url);
 
       // Only show a success toast when the server explicitly provides a message
-      if (
-        response &&
-        typeof response.message === "string" &&
-        response.message.trim()
-      ) {
-        toast.success(response.message);
-      }
+      // if (
+      //   response &&
+      //   typeof response.message === "string" &&
+      //   response.message.trim()
+      // ) {
+      //   toast.success(response.message);
+      // }
+      // This toast is commented to hide that forms fields are fetched
 
       return response;
     } catch (error: any) {
@@ -44,7 +45,7 @@ const useFetchFormOptions = (
     const baseUrl = buildListingsUrl(FORM_ENDPOINTS.adRequest);
     const params = new URLSearchParams({ group: checkGroup });
 
-    if (checkGroup === "health" || checkGroup === "Job Seekers") {
+    if (checkGroup === "health" || checkGroup === "Health" || checkGroup === "Job Seekers") {
       if (category) params.append("category", category);
     } else if (checkGroup === "Buy and Sell") {
       if (category) params.append("category", category);
@@ -55,6 +56,11 @@ const useFetchFormOptions = (
   };
 
   const apiUrl = buildUrl();
+
+  console.log(apiUrl)
+  console.log(apiUrl)
+  console.log(apiUrl)
+  console.log(apiUrl)
 
   // If `enabled` is false, pass a null key to SWR to avoid fetching
   const {

@@ -1,5 +1,6 @@
 import { ProductPromoListProps, PromoListProps } from "../constants";
 import { BenefitProps } from "../PromotionCard";
+import { SelectedDuration } from "../types";
 
 export interface PromotionPlanData {
   _id: string;
@@ -112,6 +113,7 @@ export interface PromoContextProps {
   promoPlan: PromotionPlanData | undefined;
   promoNav: PromoNav;
   sectionItems: SelectedItems[] | [];
+  selectedDuration: SelectedDuration | null;
   handleSelectPromotion: (data: ObjectProps) => void;
   handleResetSelection: () => void;
   handleIncrementCount: (key: string) => void;
@@ -128,8 +130,8 @@ export interface PromoContextProps {
   handlePromoNavChange: (nav: PromoNav) => void;
   handleSectionItems: (sectionTitle: string, value: string) => void;
   handleRemoveSectionItem: (sectionTitle: string, value: string) => void;
+  handleSelectedDuration: (duration: SelectedDuration) => void;
 }
-
 
 export enum PaymentMethod {
   CreditCard = "Credit Card",
@@ -138,5 +140,3 @@ export enum PaymentMethod {
   BankTransfer = "Bank Transfer",
   Cheque = "Cheque",
 }
-
-

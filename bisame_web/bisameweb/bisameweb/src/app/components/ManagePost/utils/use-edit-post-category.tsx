@@ -1,5 +1,7 @@
+
 import { ServiceCategorySelector } from "@/app/components/PostAd/ServiceCategorySelector/ServiceCategorySelector";
 import type { ServiceSelection } from "@/app/components/PostAd/ServiceCategorySelector/useServiceSelector";
+import { EditServiceCategorySelector } from "../EditServiceCategorySelectory";
 
 export type Group =
   | "services"
@@ -12,6 +14,7 @@ export type Group =
   | "Jobs"
   | "foods"
   | "Food"
+  | "Foods"
   | "jobseek"
   | "Job Seekers"
   | "health"
@@ -24,19 +27,19 @@ export interface HandleGroupInputProps {
   placeholder?: string;
 }
 
-export const handleGroupInput = (
+export const handleEditGroupInput = (
   group: Group,
   props: HandleGroupInputProps
 ) => {
   switch (group) {
     case "services":
     case "Services":
-      return <ServiceCategorySelector {...props} group="Services" />;
+      return <EditServiceCategorySelector {...props} group="Services" />;
 
     case "products":
     case "Buy and Sell":
       return (
-        <ServiceCategorySelector
+        <EditServiceCategorySelector
           placeholder="Select a product..."
           group="Buy and Sell"
           {...props}
@@ -46,7 +49,7 @@ export const handleGroupInput = (
     case "books":
     case "Books":
       return (
-        <ServiceCategorySelector
+        <EditServiceCategorySelector
           group="Books"
           placeholder="Select a book you would like to post..."
           {...props}
@@ -56,7 +59,7 @@ export const handleGroupInput = (
     case "jobs":
     case "Jobs":
       return (
-        <ServiceCategorySelector
+        <EditServiceCategorySelector
           group="Jobs"
           placeholder="Select a job you want to post..."
           {...props}
@@ -65,9 +68,10 @@ export const handleGroupInput = (
 
     case "foods":
     case "Food":
+    case "Foods":
       return (
-        <ServiceCategorySelector
-          group="Foods"
+        <EditServiceCategorySelector
+          group="Food"
           placeholder="Select food you want to post..."
           {...props}
         />
@@ -76,7 +80,7 @@ export const handleGroupInput = (
     case "jobseek":
     case "Job Seekers":
       return (
-        <ServiceCategorySelector
+        <EditServiceCategorySelector
           group="Job Seekers"
           placeholder="Select a job you are looking for..."
           {...props}
@@ -86,7 +90,7 @@ export const handleGroupInput = (
     case "health":
     case "Health":
       return (
-        <ServiceCategorySelector
+        <EditServiceCategorySelector
           group="Health"
           placeholder="Select a health category you want to post..."
           {...props}
