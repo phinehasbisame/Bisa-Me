@@ -4,6 +4,7 @@ import { MessageCircle } from 'lucide-react';
 import StarRating from './StarRating';
 import ReviewComment from './ReviewComment';
 import { useReviewForm } from '../hooks/useReviewForm';
+import { useSearchParams } from 'next/navigation';
 
 interface ReviewFormProps {
   onReviewSubmit?: (rating: number, comment: string) => Promise<void> | void;
@@ -11,6 +12,7 @@ interface ReviewFormProps {
 }
 
 const ReviewForm = ({ onReviewSubmit, onClose }: ReviewFormProps) => {
+  const listingId = useSearchParams().get("id") as string
   const {
     rating,
     hoveredRating,
@@ -23,7 +25,8 @@ const ReviewForm = ({ onReviewSubmit, onClose }: ReviewFormProps) => {
     handleStarHover,
     handleStarLeave,
     resetForm,
-  } = useReviewForm({ onReviewSubmit, onClose });
+  } = useReviewForm({ onReviewSubmit, onClose, listingId });
+
 
   // Reset form when modal is closed
   const handleClose = () => {

@@ -53,7 +53,7 @@ const ReviewModal = ({
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40 p-4 backdrop-blur-md"
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[99] p-4 backdrop-blur-md"
       role="dialog"
       aria-modal="true"
       aria-labelledby="review-modal-title"

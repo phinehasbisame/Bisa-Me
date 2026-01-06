@@ -81,16 +81,15 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     useProductForm({
       productData: productData,
     });
-    
 
-  console.log(formData)
-  console.log(formData)
-  console.log(formData)
-  console.log(formData)
-  console.log(formData)
-  console.log(formData)
-  console.log(formData)
-  console.log(formData)
+  console.log(formData);
+  console.log(formData);
+  console.log(formData);
+  console.log(formData);
+  console.log(formData);
+  console.log(formData);
+  console.log(formData);
+  console.log(formData);
 
   const [group, setGroup] = useState<Group>(formData?.categoryGroup as Group);
 
@@ -152,6 +151,13 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
 
   // **Handle dynamic attribute changes - store in separate state**
   const handleDynamicAttributeChange = (field: string, value: string) => {
+    setDynamicAttributes((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleCheckboxInputChange = (field: string, value: string[]) => {
     setDynamicAttributes((prev) => ({
       ...prev,
       [field]: value,
@@ -449,6 +455,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             requiredAttributes={requiredAttributes}
             formatLabel={formatLabel}
             onDynamicAttributeChange={handleDynamicAttributeChange}
+            onCheckboxInputChange={handleCheckboxInputChange}
           />
 
           {formData.contactNumber !== undefined && (
@@ -498,9 +505,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   );
 };
 
-const EditProductModalProvider = ({
-  ...props
-}: EditProductModalProps) => (
+const EditProductModalProvider = ({ ...props }: EditProductModalProps) => (
   <EditPostFormProvider>
     <EditProductModal {...props} />
   </EditPostFormProvider>

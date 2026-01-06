@@ -19,6 +19,7 @@ interface EditPostAttributesProps {
   requiredAttributes: string[];
   formatLabel: (key: string) => string;
   onDynamicAttributeChange: (field: string, value: string) => void;
+  onCheckboxInputChange: (field: string, value: string[]) => void;
   onAttributeChange: (key: string, value: any) => void;
 }
 
@@ -30,6 +31,7 @@ const EditPostAttributes = ({
   formatLabel,
   onAttributeChange,
   onDynamicAttributeChange,
+  onCheckboxInputChange,
 }: EditPostAttributesProps) => {
   return (
     <>
@@ -78,7 +80,7 @@ const EditPostAttributes = ({
             <ProductsFields
               data={data as FormOptions[]}
               formData={formData as ObjectProps}
-              // handleCheckboxInputChange={handleCheckboxInputChange}
+              handleCheckboxInputChange={onCheckboxInputChange}
               handleInputChange={onDynamicAttributeChange}
             />
           ) : null}
