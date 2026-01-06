@@ -1,10 +1,10 @@
 "use client";
 
-import { MessageCircle } from 'lucide-react';
-import StarRating from './StarRating';
-import ReviewComment from './ReviewComment';
-import { useReviewForm } from '../hooks/useReviewForm';
-import { useSearchParams } from 'next/navigation';
+import { MessageCircle, Info } from "lucide-react";
+import StarRating from "./StarRating";
+import ReviewComment from "./ReviewComment";
+import { useReviewForm } from "../hooks/useReviewForm";
+import { useSearchParams } from "next/navigation";
 
 interface ReviewFormProps {
   onReviewSubmit?: (rating: number, comment: string) => Promise<void> | void;
@@ -12,7 +12,8 @@ interface ReviewFormProps {
 }
 
 const ReviewForm = ({ onReviewSubmit, onClose }: ReviewFormProps) => {
-  const listingId = useSearchParams().get("id") as string
+  const listingId = useSearchParams().get("id") as string;
+
   const {
     rating,
     hoveredRating,
@@ -27,26 +28,32 @@ const ReviewForm = ({ onReviewSubmit, onClose }: ReviewFormProps) => {
     resetForm,
   } = useReviewForm({ onReviewSubmit, onClose, listingId });
 
-
-  // Reset form when modal is closed
   const handleClose = () => {
     resetForm();
     onClose();
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 space-y-6">
-      <fieldset className="border-0 p-0 m-0" aria-labelledby="review-form-legend">
-        <legend id="review-form-legend" className="sr-only">Product Review Form</legend>
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-orange-100 rounded-xl">
-            <MessageCircle className="text-orange-600" size={24} />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">Share Your Experience</h2>
-            <p className="text-gray-500 text-sm">Help others by writing a review</p>
-          </div>
-        </div>
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 md:p-8 space-y-8"
+      aria-labelledby="review-form-title"
+    >
+      {/* Header */}
+      <header className="border-b border-gray-100 pb-5 space-y-1">
+        <h2
+          id="review-form-title"
+          className="text-xl md:text-2xl font-semibold text-gray-900 tracking-tight"
+        >
+          Write a review
+        </h2>
+        <p className="text-sm text-gray-500 max-w-xl leading-relaxed">
+          Share your experience to help other customers evaluate this product.
+        </p>
+      </header>
+
+      {/* Rating */}
+      <section className="space-y-2">
         <StarRating
           rating={rating}
           hoveredRating={hoveredRating}
@@ -55,38 +62,53 @@ const ReviewForm = ({ onReviewSubmit, onClose }: ReviewFormProps) => {
           onStarHover={handleStarHover}
           onStarLeave={handleStarLeave}
         />
+      </section>
+
+      {/* Review comment */}
+      <section className="space-y-2">
+        
         <ReviewComment
+          // id="review-comment"
           comment={comment}
           setComment={setComment}
           isSubmitting={isSubmitting}
         />
-      </fieldset>
-      <div className="flex space-x-3">
+        <div className="flex items-start gap-2 text-xs text-gray-400">
+          <Info size={14} className="mt-0.5" />
+          <p>
+            Reviews are public and must follow our community guidelines. Avoid
+            personal or sensitive information.
+          </p>
+        </div>
+      </section>
+
+      {/* Actions */}
+      <footer className="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4">
         <button
           type="button"
           onClick={handleClose}
           disabled={isSubmitting}
-          className="flex-1 px-3 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+          className="rounded-xl border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={!isFormValid || isSubmitting}
-          className="flex-1 px-3 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-50 flex items-center justify-center"
+          className="rounded-xl bg-orange-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-orange-600 disabled:opacity-50 flex items-center justify-center"
         >
           {isSubmitting ? (
             <span className="flex items-center gap-2">
-              <span className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
-              Submitting...
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              Submitting review
             </span>
           ) : (
-            'Submit Review'
+            "Submit review"
           )}
         </button>
-      </div>
+      </footer>
     </form>
   );
 };
 
-export default ReviewForm; 
+export default ReviewForm;

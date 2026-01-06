@@ -20,7 +20,9 @@ const CallSeller: React.FC<CallSellerProps> = ({
   sellerId: propSellerId,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [loadingAction, setLoadingAction] = useState<"call" | "whatsapp" | null>(null);
+  const [loadingAction, setLoadingAction] = useState<
+    "call" | "whatsapp" | null
+  >(null);
   const [currentSellerId, setCurrentSellerId] = useState<string | null>(null);
 
   /* ---------------------------------
@@ -74,7 +76,9 @@ const CallSeller: React.FC<CallSellerProps> = ({
     try {
       const message = `Hi ${sellerName}, I'm interested in your products on Bisame.`;
       const cleanPhone = phoneNumber.replace(/[^0-9]/g, "");
-      const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+      const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
+        message
+      )}`;
 
       await new Promise((resolve) => setTimeout(resolve, 300));
       window.open(url, "_blank");
@@ -110,19 +114,18 @@ const CallSeller: React.FC<CallSellerProps> = ({
   ----------------------------------- */
   return (
     <div className={`w-full ${className}`}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
+      <div className="grid grid-cols-2 gap-6">
         {/* CALL BUTTON */}
         <a
           href={`tel:+${phoneNumber}`}
           // disabled={isDisabled || isLoading}
           className={`
-            group relative overflow-hidden flex items-center justify-center px-6 py-4
-            bg-gradient-to-r from-blue-600 to-blue-700
+            group relative overflow-hidden flex items-center justify-center px-3 py-1 md:px-6 md:py-4
+            border border-blue-500 text-blue-500
             hover:from-blue-700 hover:to-blue-800
-            text-white font-semibold rounded-lg
+            font-semibold rounded-lg
             transition-all duration-300
-            transform hover:scale-[1.02] hover:shadow-xl
+            transform hover:scale-[1.01] hover:shadow-xl
             disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
             ${loadingAction === "call" ? "animate-pulse" : ""}
           `}
@@ -135,7 +138,9 @@ const CallSeller: React.FC<CallSellerProps> = ({
                 <FaPhone className="w-4 h-4" />
               </div>
             )}
-            <span>{loadingAction === "call" ? "Connecting..." : "Call Now"}</span>
+            <span>
+              {loadingAction === "call" ? "Connecting..." : "Call Now"}
+            </span>
           </div>
         </a>
 
@@ -145,11 +150,11 @@ const CallSeller: React.FC<CallSellerProps> = ({
           disabled={isDisabled || isLoading}
           className={`
             group relative overflow-hidden flex items-center justify-center px-6 py-4
-            bg-gradient-to-r from-green-500 to-green-600
-            hover:from-green-600 hover:to-green-700
+            bg-gradient-to-r from-green-400 to-green-500
+            hover:from-green-500 hover:to-green-600
             text-white font-semibold rounded-lg
             transition-all duration-300
-            transform hover:scale-[1.02] hover:shadow-xl
+            transform hover:scale-[1.01] hover:shadow-xl
             disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
             ${loadingAction === "whatsapp" ? "animate-pulse" : ""}
           `}
@@ -162,10 +167,11 @@ const CallSeller: React.FC<CallSellerProps> = ({
                 <FaWhatsapp className="w-4 h-4" />
               </div>
             )}
-            <span>{loadingAction === "whatsapp" ? "Opening..." : "WhatsApp"}</span>
+            <span>
+              {loadingAction === "whatsapp" ? "Opening..." : "WhatsApp"}
+            </span>
           </div>
         </button>
-
       </div>
     </div>
   );

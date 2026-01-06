@@ -117,7 +117,7 @@ const SavedProductCard: React.FC<SavedProductCardProps> = ({
         {/* Product Name */}
         <Link
           href={`/ProductDetails?id=${encodeURIComponent(
-            product.favoriteId as string
+            product.id as string
           )}`}
         >
           <h3 className="text-sm font-semibold text-gray-900 mb-2 line-clamp-2 leading-tight">
@@ -132,7 +132,7 @@ const SavedProductCard: React.FC<SavedProductCardProps> = ({
             <FaMapMarkerAlt className="mr-1 text-orange-500" size={10} />
             {product.location}
           </div>
-          {/* Category */}
+          Category
           {(product.category || product.subCategory) && (
             <div className="text-xs text-gray-500 mb-2">
               {product.category}{" "}

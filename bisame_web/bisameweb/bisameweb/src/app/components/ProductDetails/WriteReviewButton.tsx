@@ -36,9 +36,9 @@ const WriteReviewButton = ({ onReviewSubmit }: WriteReviewButtonProps) => {
     <>
       <button
         onClick={openModal}
-        className="group relative bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
+        className="group relative bg-gradient-to-r text-xs md:text-sm from-orange-500 to-orange-600 text-white px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
       >
-        <MessageCircle size={20} />
+        <MessageCircle size={15} />
         Write a Review
       </button>
       <ReviewModal

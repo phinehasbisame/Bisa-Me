@@ -141,7 +141,7 @@ const ReviewsSection: React.FC = () => {
 
   return (
     <div className="max-w-8xl mx-auto">
-      <section className="bg-white border border-gray-200 rounded-md shadow-sm overflow-hidden">
+      <section className="bg-white rounded-md shadow-sm overflow-hidden">
         {/* Header */}
         <ProductsHeader
           header="Reviews"

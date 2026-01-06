@@ -68,7 +68,7 @@ const ReviewReplyModal: React.FC<ReviewReplyModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm animate-fadeIn">
+    <div className="fixed inset-0 z-[99] flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm animate-fadeIn">
       <div className="bg-white rounded-lg shadow-2xl max-w-md w-full mx-4 p-6 relative animate-scaleIn">
         <button
           className="absolute top-3 right-3 text-gray-400 hover:text-orange-500 text-xl focus:outline-none"

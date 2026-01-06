@@ -1,13 +1,36 @@
 "use client";
 
-import { Star } from 'lucide-react';
+import { Star } from "lucide-react";
 
-const ratingTexts: { [key: number]: { text: string; color: string; emoji: string } } = {
-  1: { text: "Poor", color: "text-red-500", emoji: "😞" },
-  2: { text: "Fair", color: "text-orange-500", emoji: "😐" },
-  3: { text: "Good", color: "text-yellow-500", emoji: "🙂" },
-  4: { text: "Very Good", color: "text-blue-500", emoji: "😊" },
-  5: { text: "Excellent", color: "text-green-500", emoji: "🤩" },
+const ratingMap: Record<
+  number,
+  { label: string; description: string; color: string }
+> = {
+  1: {
+    label: "Poor",
+    description: "Very disappointing experience",
+    color: "text-red-500",
+  },
+  2: {
+    label: "Fair",
+    description: "Below expectations",
+    color: "text-orange-500",
+  },
+  3: {
+    label: "Good",
+    description: "Meets expectations",
+    color: "text-yellow-500",
+  },
+  4: {
+    label: "Very Good",
+    description: "Above expectations",
+    color: "text-blue-500",
+  },
+  5: {
+    label: "Excellent",
+    description: "Outstanding quality",
+    color: "text-green-500",
+  },
 };
 
 interface StarRatingProps {
@@ -27,65 +50,68 @@ const StarRating = ({
   onStarHover,
   onStarLeave,
 }: StarRatingProps) => {
-  const displayRating = hoveredRating || rating;
-  const ratingInfo = displayRating > 0 ? ratingTexts[displayRating] : null;
+  const activeRating = hoveredRating || rating;
+  const ratingInfo = activeRating ? ratingMap[activeRating] : null;
 
   return (
-    <div className="space-y-4">
-      <label id="star-rating-label" className="block text-lg font-semibold text-gray-800">
-        Rate this product
-      </label>
+    <section className="space-y-3">
+      <div className="flex items-center justify-between">
+        <label
+          id="star-rating-label"
+          className="text-sm font-medium text-gray-700"
+        >
+          Overall rating
+        </label>
+        {ratingInfo && (
+          <span className={`text-sm font-semibold ${ratingInfo.color}`}>
+            {ratingInfo.label}
+          </span>
+        )}
+      </div>
+
       <div
-        className="flex flex-col items-center space-y-4 p-6 bg-gray-50 rounded-2xl"
         role="radiogroup"
         aria-labelledby="star-rating-label"
-        aria-label="Star rating"
+        className="flex items-center gap-2"
       >
-        <div className="flex items-center space-x-2">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              type="button"
-              onClick={() => onStarClick(star)}
-              onMouseEnter={() => onStarHover(star)}
-              onMouseLeave={onStarLeave}
-              className="p-1 transition-transform duration-200 hover:scale-125 focus:outline-none focus:ring-4 focus:ring-orange-200 rounded-full"
-              disabled={isSubmitting}
-              role="radio"
-              aria-checked={rating === star}
-              aria-label={`Rate ${star} star${star > 1 ? 's' : ''}`}
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  onStarClick(star);
-                }
-              }}
-            >
-              <Star
-                size={40}
-                className={`transition-colors duration-200 ${
-                  star <= displayRating
-                    ? 'text-yellow-400 fill-yellow-400'
-                    : 'text-gray-300'
-                }`}
-              />
-            </button>
-          ))}
-        </div>
-        <div className="h-8 flex items-center justify-center">
-          {ratingInfo && (
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">{ratingInfo.emoji}</span>
-              <span className={`text-lg font-semibold ${ratingInfo.color}`}>
-                {ratingInfo.text}
-              </span>
-            </div>
-          )}
-        </div>
+        {[1, 2, 3, 4, 5].map((star) => (
+          <button
+            key={star}
+            type="button"
+            role="radio"
+            aria-checked={rating === star}
+            aria-label={`${star} star rating`}
+            disabled={isSubmitting}
+            onClick={() => onStarClick(star)}
+            onMouseEnter={() => onStarHover(star)}
+            onMouseLeave={onStarLeave}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                onStarClick(star);
+              }
+            }}
+            className="rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400 disabled:cursor-not-allowed"
+          >
+            <Star
+              size={32}
+              className={`transition-all duration-200 ${
+                star <= activeRating
+                  ? "fill-yellow-400 text-yellow-400 scale-110"
+                  : "text-gray-300"
+              }`}
+            />
+          </button>
+        ))}
       </div>
-    </div>
+
+      <div className="min-h-[1.25rem]">
+        {ratingInfo && (
+          <p className="text-xs text-gray-500">{ratingInfo.description}</p>
+        )}
+      </div>
+    </section>
   );
 };
 
-export default StarRating; 
+export default StarRating;

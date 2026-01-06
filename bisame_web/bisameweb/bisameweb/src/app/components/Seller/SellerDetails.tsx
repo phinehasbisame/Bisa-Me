@@ -35,7 +35,7 @@ const SellerDetails: React.FC = () => {
   // ERROR VIEW
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <div className="p-10 bg-white rounded-3xl shadow-xl border border-gray-200 max-w-md w-full text-center">
           <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-red-100 to-red-50 rounded-2xl flex items-center justify-center">
             <svg
@@ -72,7 +72,7 @@ const SellerDetails: React.FC = () => {
   const firstListing = sellerData[0];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-100">
+    <div className="min-h-screen p-3">
       <div className="w-full mx-auto sm:px-6 md:px-48 lg:px-56 sm:py-6 md:py-8">
         {/* Header */}
         <div className="mb-10 pb-4 border-b border-gray-200">
@@ -88,7 +88,7 @@ const SellerDetails: React.FC = () => {
 
         {/* Seller Card */}
         <div className="bg-white rounded-3xl shadow-lg border border-gray-200/60 mb-10 overflow-hidden transition-all duration-300 hover:shadow-xl">
-          <div className="bg-gradient-to-r from-orange-50 to-white p-2">
+          <div className="p-2">
             <SellerProfile product={firstListing} />
           </div>
 

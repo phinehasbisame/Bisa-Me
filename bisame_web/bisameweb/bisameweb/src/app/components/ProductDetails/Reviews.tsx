@@ -49,7 +49,7 @@ const Reviews = ({ product }: ReviewsProps) => {
   return (
     <div className="md:col-span-3">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold">Customer Reviews</h2>
+        <h2 className="md:text-xl font-semibold">Customer Reviews</h2>
         <WriteReviewButton onReviewSubmit={handleReviewSubmit} />
       </div>
       {reviews.length > 0 ? (

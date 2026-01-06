@@ -45,8 +45,8 @@ const ReplyItem: React.FC<{ reply: Reply; formatDate: (dateString: string) => st
 
 const ReviewItem: React.FC<ReviewItemProps> = ({ review, formatDate }) => {
   return (
-    <div className="border-b pb-6">
-      <div className="flex items-center mb-3">
+    <div className="pb-6">
+      <div className="flex items-center my-3">
         <Image
           src={review.reviewerProfilePicture ? getImageUrl(review.reviewerProfilePicture, 100, 100) : "/Avatar.png"}
           alt={review.reviewerName}

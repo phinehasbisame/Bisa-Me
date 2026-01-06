@@ -6,39 +6,59 @@ interface ReviewCommentProps {
   isSubmitting: boolean;
 }
 
-const ReviewComment = ({ comment, setComment, isSubmitting }: ReviewCommentProps) => {
-  // const minCharsId = 'review-min-chars'; // unused variable
-  // const charCountId = 'review-char-count'; // unused variable
-  // const textareaId = 'review-comment-textarea'; // unused variable
+const MIN_CHARS = 10;
+const MAX_CHARS = 500;
+
+const ReviewComment = ({
+  comment,
+  setComment,
+  isSubmitting,
+}: ReviewCommentProps) => {
+  const isTooShort = comment.length > 0 && comment.length < MIN_CHARS;
 
   return (
-    <div>
-      <label htmlFor="review-comment" className="block text-sm font-semibold text-gray-700 mb-3">
-        Your Review
-      </label>
+    <div className="space-y-2">
+      <div className="flex items-center justify-between">
+        <label
+          htmlFor="review-comment"
+          className="text-sm font-medium text-gray-700"
+        >
+          Written review
+        </label>
+        <span className="text-xs text-gray-400" aria-live="polite">
+          {comment.length}/{MAX_CHARS}
+        </span>
+      </div>
+
       <textarea
         id="review-comment"
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        placeholder="Share your experience with this product..."
+        placeholder="Describe what you liked or disliked about the product."
         rows={4}
         disabled={isSubmitting}
-        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all resize-none disabled:opacity-50"
-        maxLength={500}
-        aria-label="Review comment"
+        maxLength={MAX_CHARS}
+        className={`
+          w-full rounded-xl border px-3 py-2.5 text-sm text-gray-900
+          placeholder:text-gray-400 resize-none transition
+          focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent
+          disabled:bg-gray-50 disabled:opacity-60
+          ${isTooShort ? "border-red-300" : "border-gray-300"}
+        `}
         aria-required="true"
-        aria-describedby="review-min-chars review-char-count"
+        aria-invalid={isTooShort}
+        aria-describedby="review-guidelines"
       />
-      <div className="flex justify-between items-center mt-2">
-        <p id="review-min-chars" className="text-xs text-gray-500">
-          Minimum 10 characters required
-        </p>
-        <p id="review-char-count" className="text-xs text-gray-500">
-          {comment.length}/500
-        </p>
-      </div>
+
+      <p
+        id="review-guidelines"
+        className={`text-xs ${isTooShort ? "text-red-500" : "text-gray-500"}`}
+      >
+        Minimum {MIN_CHARS} characters. Focus on product quality, usage, and
+        value.
+      </p>
     </div>
   );
 };
 
-export default ReviewComment; 
+export default ReviewComment;

@@ -48,11 +48,11 @@ const AccountInfo = () => {
           ) : (
             <Image
               src={imgSrc}
-              alt={`Profile picture of ${name}`}
+              alt={`Profile`}
               width={60}
               height={60}
               className="w-16 h-16 rounded-full mr-4 border-2 border-orange-500"
-              onError={() => setImgSrc("/user.png")}
+              onError={() => setImgSrc("/profile.jpeg")}
             />
           )}
           <p className="font-semibold text-gray-800">
